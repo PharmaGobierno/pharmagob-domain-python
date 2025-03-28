@@ -1,1 +1,1 @@
-# pharmagob-domain-python
+# pharma-gob-domain
