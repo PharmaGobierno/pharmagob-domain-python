@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf8") as fh:
 
 requirements_list = []
 
-LIB_NAME: str = "pharmagob-domain"
+LIB_NAME: str = "pharmagob-domain-python"
 
 setuptools.setup(
     name=LIB_NAME,
@@ -15,7 +15,7 @@ setuptools.setup(
     description="PharmaGob Domain",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url=f"https://{LIB_NAME}.git",
+    url=f"https://github.com/PharmaGobierno/{LIB_NAME}.git",
     include_package_data=True,
     keywords="pharmagob, domain, library, python",
     packages=setuptools.find_packages(),
