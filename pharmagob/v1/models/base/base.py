@@ -23,5 +23,5 @@ class BaseModel:
         return {k: str(v) for k, v in asdict(self).items()}
 
     @classmethod
-    def from_dict(cls, **kwargs) -> Self:
+    def from_params(cls, **kwargs) -> Self:
         return cls(**kwargs)
