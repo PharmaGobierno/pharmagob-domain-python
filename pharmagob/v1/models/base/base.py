@@ -1,14 +1,13 @@
 import uuid
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
+from time import time
 from typing import Self
 
 
 @dataclass
 class BaseModel:
-    __entity_name__: str
-
-    _id: uuid.UUID
-    created_at: int
+    _id: str = field(default_factory=lambda: str(uuid.UUID()))
+    created_at: int = field(default_factory=lambda: int(time() * 1000))
     version: str = "1.0.0"
 
     @classmethod
@@ -17,10 +16,10 @@ class BaseModel:
             raise TypeError(
                 f"__entity_name__ must be defined at " f"{cls.__class__.__name__} model"
             )
-        return cls.__entity_name__
+        return str(getattr(cls, "__entity_name__", None))
 
     def dict(self):
-        return {k: str(v) for k, v in asdict(self).items()}
+        return asdict(self)
 
     @classmethod
     def from_params(cls, **kwargs) -> Self:
