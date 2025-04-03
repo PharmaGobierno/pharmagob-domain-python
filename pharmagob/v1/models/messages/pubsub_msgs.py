@@ -23,6 +23,7 @@ class BasePubsubMessage:
 @dataclass
 class ShipmentStatusPubsubMessage(BasePubsubMessage):
     payload: ShipmentModel
+    status: str
     version: str = "1"
 
     @classmethod
@@ -33,6 +34,7 @@ class ShipmentStatusPubsubMessage(BasePubsubMessage):
 @dataclass
 class LocationContentStatesPubsubMessage(BasePubsubMessage):
     payload: LocationContentModel
+    state: str
     version: str = "1"
 
     @classmethod
