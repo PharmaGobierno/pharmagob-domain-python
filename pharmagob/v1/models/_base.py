@@ -1,15 +1,28 @@
-import uuid
 from dataclasses import asdict, dataclass, field
 from enum import Enum
 from time import time
 from typing import Generic, Self, TypeVar
+from uuid import NAMESPACE_OID, uuid4, uuid5
 
 StateAttributeT = TypeVar("StateAttributeT", bound="Enum")
 
 
+def uuid_by_params(*args):
+    """Generates a UUIDv5 based on the given parameters.
+
+    Args:
+        *args: Variable number of arguments used to create the UUID.
+
+    Returns:
+        str: The generated UUID as a string.
+    """
+    value = "#".join(map(str, args))
+    return str(uuid5(namespace=NAMESPACE_OID, name=value))
+
+
 @dataclass
 class BaseModel:
-    _id: str = field(default_factory=lambda: str(uuid.UUID()))
+    _id: str = field(default_factory=lambda: str(uuid4()))
     created_at: int = field(default_factory=lambda: int(time() * 1000))
     version: str = "1.0.0"
 
