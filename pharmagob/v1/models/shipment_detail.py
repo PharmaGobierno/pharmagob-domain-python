@@ -14,6 +14,6 @@ class ShipmentDetailModel(BaseModel, UpdatableModel):
     foreign_id: str
     item: min_models.ItemlMin
     lot: str
-    quantiry: int
+    quantity: int
     brand: Optional[str]
     last_author: Optional[min_models.UserMin]
