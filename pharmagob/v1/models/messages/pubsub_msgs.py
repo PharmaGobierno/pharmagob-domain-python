@@ -20,7 +20,7 @@ class BasePubsubMessage:
         raise NotImplementedError
 
 
-@dataclass
+@dataclass(kw_only=True)
 class ShipmentStatusPubsubMessage(BasePubsubMessage):
     payload: ShipmentModel
     status: str
@@ -31,7 +31,7 @@ class ShipmentStatusPubsubMessage(BasePubsubMessage):
         return "shipment-status"
 
 
-@dataclass
+@dataclass(kw_only=True)
 class LocationContentStatesPubsubMessage(BasePubsubMessage):
     payload: LocationContentModel
     state: str
