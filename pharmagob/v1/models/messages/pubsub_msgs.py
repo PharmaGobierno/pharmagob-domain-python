@@ -14,7 +14,16 @@ class BasePubsubMessage:
     def dict(self):
         return asdict(self)
 
+    @classmethod
+    def topic(cls) -> str:
+        raise NotImplementedError
+
 
 @dataclass
 class ShipmentStatusPubsubMessage(BasePubsubMessage):
     payload: ShipmentModel
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "shipment-status"
