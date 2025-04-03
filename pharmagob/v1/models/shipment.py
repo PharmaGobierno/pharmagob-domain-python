@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from .base.base import BaseModel
-from .minified.user import UserMin
+from ._base import BaseModel
+from .minified import min_models
 
 
 @dataclass(kw_only=True)
@@ -14,4 +14,4 @@ class ShipmentModel(BaseModel):
     status: str
     shipment_type: str
     application_date: int
-    user: UserMin
+    user: min_models.UserMin

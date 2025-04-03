@@ -1,7 +1,7 @@
 from typing import Generic, List, Optional, Tuple, TypeVar, Union
 
-from pharmagob.v1.models.base.base import BaseModel
-from pharmagob.v1.repository_interfaces.base.base import BaseRepositoryInterface
+from pharmagob.v1.models._base import BaseModel
+from pharmagob.v1.repository_interfaces._base import BaseRepositoryInterface
 
 RepositoryInterfaceT = TypeVar("RepositoryInterfaceT", bound="BaseRepositoryInterface")
 ModelT = TypeVar("ModelT", bound="BaseModel")

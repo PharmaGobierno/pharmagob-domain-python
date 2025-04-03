@@ -1,7 +1,10 @@
 import uuid
 from dataclasses import asdict, dataclass, field
+from enum import Enum
 from time import time
-from typing import Self
+from typing import Generic, Self, TypeVar
+
+StateAttributeT = TypeVar("StateAttributeT", bound="Enum")
 
 
 @dataclass
@@ -24,3 +27,23 @@ class BaseModel:
     @classmethod
     def from_params(cls, **kwargs) -> Self:
         return cls(**kwargs)
+
+
+@dataclass(kw_only=True)
+class UpdatableModel:
+    updated_at: int
+
+
+@dataclass(kw_only=True)
+class StatefulModel(Generic[StateAttributeT]):
+    """A generic dataclass representing a stateful entity with
+    transition timestamp and state.
+
+    Attributes:
+        transition_timestamp (int): The timestamp of the state
+            transition.
+        state (StateAttributeT): The current state of the entity.
+    """
+
+    transition_timestamp: int
+    state: StateAttributeT

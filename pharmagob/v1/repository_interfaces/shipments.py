@@ -1,4 +1,4 @@
-from .base.base import BaseRepositoryInterface
+from ._base import BaseRepositoryInterface
 
 
 class ShipmentRepositoryInterface(BaseRepositoryInterface):
