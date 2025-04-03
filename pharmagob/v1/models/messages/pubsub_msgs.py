@@ -1,5 +1,6 @@
 from dataclasses import asdict, dataclass
 
+from pharmagob.v1.models.location_content import LocationContentModel
 from pharmagob.v1.models.minified import min_models
 from pharmagob.v1.models.shipment import ShipmentModel
 
@@ -27,3 +28,13 @@ class ShipmentStatusPubsubMessage(BasePubsubMessage):
     @classmethod
     def topic(cls) -> str:
         return "shipment-status"
+
+
+@dataclass
+class LocationContentStatesPubsubMessage(BasePubsubMessage):
+    payload: LocationContentModel
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "location-content-states"

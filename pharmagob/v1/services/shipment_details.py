@@ -9,5 +9,6 @@ from ._base import BaseService
 class ShipmentDetailService(
     BaseService[ShipmentDetailModel, ShipmentDetailRepositoryInterface]
 ):
+    def get_by_shipment_id(self, shipment_id: str) -> list[ShipmentDetailModel]: ...
 
     pass
