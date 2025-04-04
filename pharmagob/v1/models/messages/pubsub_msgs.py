@@ -8,6 +8,7 @@ from pharmagob.v1.models.shipment import ShipmentModel
 @dataclass
 class BasePubsubMessage:
     payload: dict
+    origin_timestamp: int
     published_at: int
     author: min_models.UserMin
     version: str
