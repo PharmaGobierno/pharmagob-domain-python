@@ -37,10 +37,6 @@ class BaseModel:
     def dict(self):
         return asdict(self)
 
-    @classmethod
-    def from_params(cls, **kwargs) -> Self:
-        return cls(**kwargs)
-
 
 @dataclass(kw_only=True)
 class UpdatableModel:

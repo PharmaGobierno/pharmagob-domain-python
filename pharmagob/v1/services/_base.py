@@ -25,7 +25,7 @@ class BaseService(Generic[ModelT, RepositoryInterfaceT]):
         projection: Optional[Union[list, dict]] = None,
     ) -> ModelT:
         data: dict = self.repository.get(entity_id, sort=sort, projection=projection)
-        return self.__model__.from_params(**data)
+        return self.__model__.__new__(**data)
 
     def update(self, entity_id, entity: ModelT, upsert: bool = False) -> int:
         data = entity.dict()
