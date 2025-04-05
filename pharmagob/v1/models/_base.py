@@ -1,7 +1,7 @@
 from dataclasses import asdict, dataclass, field
 from enum import Enum
 from time import time
-from typing import Generic, Self, TypeVar
+from typing import Generic, TypeVar
 from uuid import NAMESPACE_OID, uuid4, uuid5
 
 StateAttributeT = TypeVar("StateAttributeT", bound="Enum")

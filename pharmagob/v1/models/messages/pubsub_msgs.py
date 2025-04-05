@@ -1,4 +1,5 @@
 from dataclasses import asdict, dataclass
+from typing import Any
 
 from pharmagob.v1.models.location_content import LocationContentModel
 from pharmagob.v1.models.minified import min_models
@@ -7,7 +8,7 @@ from pharmagob.v1.models.shipment import ShipmentModel
 
 @dataclass
 class BasePubsubMessage:
-    payload: dict
+    payload: Any
     origin_timestamp: int
     published_at: int
     author: min_models.UserMin
