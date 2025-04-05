@@ -17,6 +17,18 @@ class BaseRepositoryInterface(metaclass=ABCMeta):
         )
 
     @abstractmethod
+    def create(self, data: dict) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def update(self, entity_id, *, data: dict) -> int:
+        raise NotImplementedError
+
+    @abstractmethod
+    def set(self, entity_id, *, data: dict, write_only_if_insert: bool = False) -> int:
+        raise NotImplementedError
+
+    @abstractmethod
     def get(
         self,
         entity_id: str,
@@ -24,12 +36,4 @@ class BaseRepositoryInterface(metaclass=ABCMeta):
         sort: Optional[List[Tuple[str, int]]] = None,
         projection: Optional[Union[list, dict]] = None
     ) -> dict:
-        raise NotImplementedError
-
-    @abstractmethod
-    def update(self, entity_id, data: dict, *, upsert: bool = False) -> int:
-        raise NotImplementedError
-
-    @abstractmethod
-    def create(self, data: dict) -> None:
         raise NotImplementedError

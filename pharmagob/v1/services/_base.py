@@ -17,6 +17,18 @@ class BaseService(Generic[ModelT, RepositoryInterfaceT]):
         data = entity.dict()
         self.repository.create(data)
 
+    def update(self, entity_id, *, entity: ModelT) -> int:
+        data = entity.dict()
+        return self.repository.update(entity_id, data=data)
+
+    def set(
+        self, entity_id, *, entity: ModelT, write_only_if_insert: bool = False
+    ) -> int:
+        data = entity.dict()
+        return self.repository.set(
+            entity_id, data=data, write_only_if_insert=write_only_if_insert
+        )
+
     def get(
         self,
         entity_id,
@@ -26,7 +38,3 @@ class BaseService(Generic[ModelT, RepositoryInterfaceT]):
     ) -> ModelT:
         data: dict = self.repository.get(entity_id, sort=sort, projection=projection)
         return self.__model__.__new__(**data)
-
-    def update(self, entity_id, entity: ModelT, upsert: bool = False) -> int:
-        data = entity.dict()
-        return self.repository.update(entity_id, data, upsert=upsert)
