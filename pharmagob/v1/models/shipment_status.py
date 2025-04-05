@@ -8,6 +8,7 @@ class ShipmentStatusModel(BaseModel):
     __entity_name__ = "shipment-status"
 
     umu_id: str
+    shipment_id: str
     status: str
     origin: str
     context: dict
