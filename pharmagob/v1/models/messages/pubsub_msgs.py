@@ -1,5 +1,5 @@
 from dataclasses import asdict, dataclass
-from typing import Any
+from typing import Any, Optional
 
 from pharmagob.v1.models.location_content import LocationContentModel
 from pharmagob.v1.models.minified import min_models
@@ -26,6 +26,7 @@ class BasePubsubMessage:
 class ShipmentStatusPubsubMessage(BasePubsubMessage):
     payload: ShipmentModel
     status: str
+    origin: Optional[str] = None
     version: str = "1"
 
     @classmethod
