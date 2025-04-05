@@ -10,5 +10,6 @@ class ShipmentStatusModel(BaseModel):
     umu_id: str
     shipment_id: str
     status: str
+    origin_timestamp: int
     origin: str
     context: dict
