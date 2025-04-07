@@ -16,6 +16,10 @@ class Status(str, Enum):
     DISPATCHED = "DISPATCHED"
 
 
+class StatusOrigins(str, Enum):
+    BLUYONDER = "BLUEYONDER"
+
+
 @dataclass(kw_only=True)
 class ShipmentModel(BaseModel):
     __entity_name__ = "shipments"
