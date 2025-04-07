@@ -40,7 +40,7 @@ class BaseModel:
 
 @dataclass(kw_only=True)
 class UpdatableModel:
-    updated_at: int
+    updated_at: int = field(default_factory=lambda: int(time() * 1000))
 
 
 @dataclass(kw_only=True)

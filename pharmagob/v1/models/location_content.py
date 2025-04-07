@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from ._base import BaseModel, UpdatableModel
+from ._base import BaseModel, UpdatableModel, uuid_by_params
 from .minified import min_models
 
 
@@ -11,5 +11,11 @@ class LocationContentModel(BaseModel, UpdatableModel):
     umu_id: str
     quantity: int
     shipment_detail: min_models.ShipmentDetailMin
-    user: min_models.UserMin
     item: min_models.ItemlMin
+    location: min_models.LocationMin
+    user: min_models.UserMin
+
+    def __post_init__(self):
+        self._id = uuid_by_params(
+            self.shipment_detail.id, self.item.id, self.location.id
+        )
