@@ -1,4 +1,4 @@
-from typing import Generic, List, Optional, Tuple, TypeVar, Union
+from typing import Generic, List, Optional, Tuple, Type, TypeVar, Union
 
 from pharmagob.v1.models._base import BaseModel
 from pharmagob.v1.repository_interfaces._base import BaseRepositoryInterface
@@ -8,7 +8,7 @@ ModelT = TypeVar("ModelT", bound="BaseModel")
 
 
 class BaseService(Generic[ModelT, RepositoryInterfaceT]):
-    __model__: ModelT
+    __model__: Type[ModelT]
 
     def __init__(self, repository: RepositoryInterfaceT):
         self.repository = repository
@@ -37,4 +37,4 @@ class BaseService(Generic[ModelT, RepositoryInterfaceT]):
         projection: Optional[Union[list, dict]] = None,
     ) -> ModelT:
         data: dict = self.repository.get(entity_id, sort=sort, projection=projection)
-        return self.__model__.__new__(**data)
+        return self.__model__(**data)

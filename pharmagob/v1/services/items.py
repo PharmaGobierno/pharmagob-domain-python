@@ -5,5 +5,4 @@ from ._base import BaseService
 
 
 class ItemService(BaseService[ItemModel, ItemRepositoryInterface]):
-
-    pass
+    __model__ = ItemModel

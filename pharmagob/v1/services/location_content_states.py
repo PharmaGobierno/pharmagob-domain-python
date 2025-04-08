@@ -9,5 +9,4 @@ from ._base import BaseService
 class LocationContentStateService(
     BaseService[LocationContentStateModel, LocationContentStatesRepositoryInterface]
 ):
-
-    pass
+    __model__ = LocationContentStateModel

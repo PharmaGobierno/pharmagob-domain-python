@@ -9,5 +9,4 @@ from ._base import BaseService
 class ShipmentStatusService(
     BaseService[ShipmentStatusModel, ShipmentStatusRepositoryInterface]
 ):
-
-    pass
+    __model__ = ShipmentStatusModel
