@@ -22,7 +22,7 @@ class ShipmentMin:
 class ShipmentDetailMin:
     id: str
     umu_id: str
-    quantiy: str
+    quantity: str
     shipment_id: str
     shipment_foreign_id: str
     shipment_order_id: str
