@@ -10,8 +10,7 @@ class ShipmentDetailModel(BaseModel, UpdatableModel):
     __entity_name__ = "shipment-details"
 
     umu_id: str
-    shipment_id: str
-    foreign_id: str
+    shipment: min_models.ShipmentMin
     item: min_models.ItemlMin
     lot: str
     quantity: int
