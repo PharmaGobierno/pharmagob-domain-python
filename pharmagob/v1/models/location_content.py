@@ -13,7 +13,7 @@ class LocationContentModel(BaseModel, UpdatableModel):
     shipment_detail: min_models.ShipmentDetailMin
     item: min_models.ItemlMin
     location: min_models.LocationMin
-    user: min_models.UserMin
+    last_author: min_models.UserMin
 
     def __post_init__(self):
         self._id = uuid_by_params(
