@@ -13,7 +13,7 @@ class UserMin:
 class ShipmentMin:
     id: str
     umu_id: str
-    foreign_key: str
+    order_number: str
     load_id: str
     order_id: Optional[str] = None
     shipment_type: Optional[str] = None
