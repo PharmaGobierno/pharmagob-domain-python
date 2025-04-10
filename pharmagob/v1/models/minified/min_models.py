@@ -43,4 +43,13 @@ class ItemlMin:
 class LocationMin:
     id: str
     umu_id: str
-    label_code: str
+    label_code: Optional[str]
+
+
+@dataclass
+class LocationContentMin:
+    id: str
+    umu_id: str
+    order_number: str
+    quantity: int
+    location_id: str

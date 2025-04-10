@@ -17,11 +17,11 @@ class LocationContentStateModel(BaseModel):
     __entity_name__ = "location-content-states"
 
     umu_id: str
-    location_content_id: str
+    location_content: min_models.LocationContentMin
     state: str
     transition_timestamp: int
     author: Optional[min_models.UserMin]
     context: Optional[dict]
 
     def __post_init__(self):
-        self._id = uuid_by_params(self.location_content_id, self.transition_timestamp)
+        self._id = uuid_by_params(self.location_content.id, self.transition_timestamp)
