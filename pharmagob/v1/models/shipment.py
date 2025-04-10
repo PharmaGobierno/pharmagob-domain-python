@@ -19,6 +19,7 @@ class Status(str, Enum):
 
 class StatusOrigins(str, Enum):
     BLUYONDER = "BLUEYONDER"
+    NOT_SPECIFIED = "NOT_SPECIFIED"
 
 
 @dataclass(kw_only=True)
