@@ -50,6 +50,8 @@ class LocationMin:
 class LocationContentMin:
     id: str
     umu_id: str
+    item_id: str
+    lot: str
     order_number: str
-    quantity: int
     location_id: str
+    quantity: int
