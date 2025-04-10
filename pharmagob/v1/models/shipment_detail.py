@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from ._base import BaseModel, UpdatableModel
+from ._base import BaseModel, UpdatableModel, uuid_by_params
 from .minified import min_models
 
 
@@ -16,3 +16,6 @@ class ShipmentDetailModel(BaseModel, UpdatableModel):
     quantity: int
     brand: Optional[str]
     last_author: Optional[min_models.UserMin]
+
+    def __post_init__(self):
+        self._id = uuid_by_params(self.shipment.id, self.item.id, self.lot)
