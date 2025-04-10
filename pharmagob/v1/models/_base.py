@@ -1,7 +1,7 @@
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, fields, is_dataclass
 from enum import Enum
 from time import time
-from typing import Generic, TypeVar
+from typing import Generic, List, TypeVar, Union, get_args, get_origin, get_type_hints
 from uuid import NAMESPACE_OID, uuid4, uuid5
 
 StateAttributeT = TypeVar("StateAttributeT", bound="Enum")
@@ -20,8 +20,63 @@ def uuid_by_params(*args):
     return str(uuid5(namespace=NAMESPACE_OID, name=value))
 
 
+class DictModelMixin:
+    @classmethod
+    def from_dict(cls, data: dict):
+        if not is_dataclass(cls):
+            raise TypeError(f"{cls.__name__} it is not dataclass")
+
+        field_types = get_type_hints(cls)
+        init_values = {}
+
+        for f in fields(cls):
+            field_value = data.get(f.name)
+            field_type = field_types.get(f.name)
+            origin = get_origin(field_type)
+
+            if field_value is None:
+                init_values[f.name] = None
+                continue
+
+            if origin is Union:
+                args = get_args(field_type)
+                non_none_type = next(
+                    (arg for arg in args if arg is not type(None)), None
+                )
+                if (
+                    is_dataclass(non_none_type)
+                    and hasattr(non_none_type, "from_dict")
+                    and isinstance(field_value, dict)
+                ):
+                    init_values[f.name] = non_none_type.from_dict(field_value)
+                else:
+                    init_values[f.name] = field_value
+
+            elif origin in (list, List):
+                inner_type = get_args(field_type)[0]
+                if is_dataclass(inner_type) and hasattr(inner_type, "from_dict"):
+                    init_values[f.name] = [
+                        inner_type.from_dict(i) if isinstance(i, dict) else i
+                        for i in field_value
+                    ]
+                else:
+                    init_values[f.name] = field_value
+
+            elif (
+                is_dataclass(field_type)
+                and hasattr(field_type, "from_dict")
+                and isinstance(field_value, dict)
+            ):
+                init_values[f.name] = field_type.from_dict(field_value)
+
+            else:
+                init_values[f.name] = field_value
+
+        return cls(**init_values)
+
+
 @dataclass
-class BaseModel:
+class BaseModel(DictModelMixin):
     _id: str = field(default_factory=lambda: str(uuid4()))
     created_at: int = field(default_factory=lambda: int(time() * 1000))
     version: str = "1.0.0"
