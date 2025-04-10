@@ -25,9 +25,10 @@ class ShipmentDetailMin:
     umu_id: str
     quantity: int
     shipment_id: str
-    shipment_foreign_id: str
-    shipment_order_id: str
+    shipment_order_number: str
+    shipment_load_id: str
     lot: str
+    shipment_order_id: Optional[str] = None
     brand: Optional[str] = None
 
 
