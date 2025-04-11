@@ -4,7 +4,7 @@ from time import time
 from typing import Generic, List, TypeVar, Union, get_args, get_origin, get_type_hints
 from uuid import NAMESPACE_OID, uuid4, uuid5
 
-StateAttributeT = TypeVar("StateAttributeT", bound="Enum")
+EventAttributeT = TypeVar("EventAttributeT", bound="Enum")
 
 
 def uuid_by_params(*args):
@@ -99,15 +99,15 @@ class UpdatableModel:
 
 
 @dataclass(kw_only=True)
-class StatefulModel(Generic[StateAttributeT]):
-    """A generic dataclass representing a stateful entity with
-    transition timestamp and state.
+class EventfulModel(Generic[EventAttributeT]):
+    """A generic dataclass representing a event entity with
+    transition timestamp. Using in event sourcing entities
 
     Attributes:
-        transition_timestamp (int): The timestamp of the state
+        transition_timestamp (int): The timestamp of the event
             transition.
-        state (StateAttributeT): The current state of the entity.
+        event (EventAttributeT): The current event of the entity.
     """
 
     transition_timestamp: int
-    state: StateAttributeT
+    event: EventAttributeT

@@ -35,11 +35,11 @@ class ShipmentStatusPubsubMessage(BasePubsubMessage):
 
 
 @dataclass(kw_only=True)
-class LocationContentStatesPubsubMessage(BasePubsubMessage):
+class LocationContentEventsPubsubMessage(BasePubsubMessage):
     payload: LocationContentModel
-    state: str
+    event: str
     version: str = "1"
 
     @classmethod
     def topic(cls) -> str:
-        return "location-content-states"
+        return "location-content-events"

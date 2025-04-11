@@ -25,13 +25,13 @@ class ShipmentMin(DictModelMixin):
 class ShipmentDetailMin(DictModelMixin):
     id: str
     umu_id: str
+    item_id: str
+    lot: str
     quantity: int
     shipment_id: str
     shipment_order_number: str
     shipment_load_id: str
-    lot: str
-    shipment_order_id: Optional[str] = None
-    brand: Optional[str] = None
+    brand: Optional[str]
 
 
 @dataclass
@@ -54,6 +54,5 @@ class LocationContentMin(DictModelMixin):
     umu_id: str
     item_id: str
     lot: str
-    order_number: str
     location_id: str
     quantity: int

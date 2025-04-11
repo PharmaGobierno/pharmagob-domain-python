@@ -6,19 +6,19 @@ from ._base import BaseModel, uuid_by_params
 from .minified import min_models
 
 
-class States(str, Enum):
+class Events(str, Enum):
     INTEGRATED = "INTEGRATED"
     ACCEPTED = "ACCEPTED"
     DISPATCHED = "DISPATCHED"
 
 
 @dataclass(kw_only=True)
-class LocationContentStateModel(BaseModel):
-    __entity_name__ = "location-content-states"
+class LocationContentEventModel(BaseModel):
+    __entity_name__ = "location-content-events"
 
     umu_id: str
     location_content: min_models.LocationContentMin
-    state: str
+    event: Events
     transition_timestamp: int
     author: Optional[min_models.UserMin]
     context: Optional[dict]

@@ -1,12 +1,12 @@
-from pharmagob.v1.models.location_content_state import LocationContentStateModel
-from pharmagob.v1.repository_interfaces.location_content_states import (
-    LocationContentStatesRepositoryInterface,
+from pharmagob.v1.models.location_content_event import LocationContentEventModel
+from pharmagob.v1.repository_interfaces.location_content_events import (
+    LocationContentEventsRepositoryInterface,
 )
 
 from ._base import BaseService
 
 
-class LocationContentStateService(
-    BaseService[LocationContentStateModel, LocationContentStatesRepositoryInterface]
+class LocationContentEventService(
+    BaseService[LocationContentEventModel, LocationContentEventsRepositoryInterface]
 ):
-    __model__ = LocationContentStateModel
+    __model__ = LocationContentEventModel

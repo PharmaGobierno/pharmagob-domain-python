@@ -17,9 +17,11 @@ class Status(str, Enum):
     DISPATCHED = "DISPATCHED"
 
 
-class StatusOrigins(str, Enum):
-    BLUYONDER = "BLUEYONDER"
-    NOT_SPECIFIED = "NOT_SPECIFIED"
+class ShipmentType(str, Enum):
+    URGENT = "URGENT"
+    STANDARD = "STANDARD"  # ordinary
+    LIFE_SUPPORT = "LIFE_SUPPORT"
+    EXTRAORDINARY = "EXTRAORDINARY"
 
 
 @dataclass(kw_only=True)
@@ -29,12 +31,12 @@ class ShipmentModel(BaseModel):
     umu_id: str
     order_number: str
     load_id: str
-    status: str
-    shipment_type: str
+    status: Status
+    shipment_type: ShipmentType
     application_date: int
     user: min_models.UserMin
     order_id: Optional[str] = None
-    review_status: str = ReviewStatus.NOT_EVALUATED
+    review_status: ReviewStatus = ReviewStatus.NOT_EVALUATED
 
     def __post_init__(self):
         self._id = uuid_by_params(self.order_number, self.load_id)

@@ -10,7 +10,6 @@ class LocationContentModel(BaseModel, UpdatableModel):
     __entity_name__ = "location-contents"
 
     umu_id: str
-    order_number: str
     lot: str
     quantity: int
     item: min_models.ItemlMin
@@ -19,6 +18,4 @@ class LocationContentModel(BaseModel, UpdatableModel):
     last_author: min_models.UserMin
 
     def __post_init__(self):
-        self._id = uuid_by_params(
-            self.item.id, self.lot, self.location.id, self.order_number
-        )
+        self._id = uuid_by_params(self.item.id, self.lot, self.location.id)
