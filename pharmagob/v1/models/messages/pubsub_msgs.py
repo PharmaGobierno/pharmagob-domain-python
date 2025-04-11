@@ -25,8 +25,8 @@ class BasePubsubMessage:
 @dataclass(kw_only=True)
 class ShipmentStatusPubsubMessage(BasePubsubMessage):
     payload: ShipmentModel
-    context: dict
     status: str
+    context: Optional[dict]
     origin: Optional[str] = None
     version: str = "1"
 
