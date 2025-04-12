@@ -16,7 +16,7 @@ class ShipmentStatusModel(BaseModel):
 
     umu_id: str
     shipment: min_models.ShipmentMin
-    status: StatusOrigins
+    status: str
     origin_timestamp: int
-    origin: str
+    origin: StatusOrigins
     context: dict
