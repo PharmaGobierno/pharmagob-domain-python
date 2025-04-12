@@ -13,7 +13,7 @@ class ShipmentDetailModel(BaseModel, UpdatableModel):
     shipment: min_models.ShipmentMin
     item: min_models.ItemlMin
     lot: str
-    expiration_data: Optional[int]
+    expiration_date: Optional[int]
     quantity: int
     brand: Optional[str]
     last_author: Optional[min_models.UserMin]
