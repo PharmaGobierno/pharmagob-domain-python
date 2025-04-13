@@ -6,7 +6,7 @@ from .minified import min_models
 
 
 class StatusOrigins(str, Enum):
-    BLUYONDER = "BLUEYONDER"
+    BLUEYONDER = "BLUEYONDER"
     NOT_SPECIFIED = "NOT_SPECIFIED"
 
 
