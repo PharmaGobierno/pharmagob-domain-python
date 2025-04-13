@@ -12,6 +12,7 @@ class BasePubsubMessage:
     origin_timestamp: int
     published_at: int
     author: min_models.UserMin
+    context: Optional[dict]
     version: str
 
     def dict(self):
@@ -26,7 +27,6 @@ class BasePubsubMessage:
 class ShipmentStatusPubsubMessage(BasePubsubMessage):
     payload: ShipmentModel
     status: str
-    context: Optional[dict]
     origin: Optional[str] = None
     version: str = "1"
 
