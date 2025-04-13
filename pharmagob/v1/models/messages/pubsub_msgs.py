@@ -12,8 +12,8 @@ class BasePubsubMessage:
     origin_timestamp: int
     published_at: int
     author: min_models.UserMin
-    context: Optional[dict]
     version: str
+    context: Optional[dict] = None
 
     def dict(self):
         return asdict(self)
