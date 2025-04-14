@@ -1,7 +1,16 @@
 from dataclasses import asdict, dataclass, field, fields, is_dataclass
 from enum import Enum
 from time import time
-from typing import Generic, List, TypeVar, Union, get_args, get_origin, get_type_hints
+from typing import (
+    Generic,
+    List,
+    Self,
+    TypeVar,
+    Union,
+    get_args,
+    get_origin,
+    get_type_hints,
+)
 from uuid import NAMESPACE_OID, uuid4, uuid5
 
 EventAttributeT = TypeVar("EventAttributeT", bound="Enum")
@@ -22,7 +31,7 @@ def uuid_by_params(*args):
 
 class DictModelMixin:
     @classmethod
-    def from_dict(cls, data: dict):
+    def from_dict(cls, data: dict) -> Self:
         if not is_dataclass(cls):
             raise TypeError(f"{cls.__name__} it is not dataclass")
 
