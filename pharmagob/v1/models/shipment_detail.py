@@ -19,4 +19,4 @@ class ShipmentDetailModel(BaseModel, UpdatableModel):
     last_author: Optional[min_models.UserMin]
 
     def __post_init__(self):
-        self._id = uuid_by_params(self.shipment.id, self.item.id, self.lot)
+        self._id = uuid_by_params(self.shipment["id"], self.item["id"], self.lot)
