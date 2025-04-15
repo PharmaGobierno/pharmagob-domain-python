@@ -1,18 +1,16 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from pharmagob.v1.models._base import DictModelMixin
-
 
 @dataclass
-class UserMin(DictModelMixin):
+class UserMin:
     id: str
     umu_id: str
     display_name: str
 
 
 @dataclass
-class ShipmentMin(DictModelMixin):
+class ShipmentMin:
     id: str
     umu_id: str
     order_number: str
@@ -22,7 +20,7 @@ class ShipmentMin(DictModelMixin):
 
 
 @dataclass
-class ShipmentDetailMin(DictModelMixin):
+class ShipmentDetailMin:
     id: str
     umu_id: str
     item_id: str
@@ -35,21 +33,21 @@ class ShipmentDetailMin(DictModelMixin):
 
 
 @dataclass
-class ItemlMin(DictModelMixin):
+class ItemlMin:
     id: str
     foreign_id: str
     name: str
 
 
 @dataclass
-class LocationMin(DictModelMixin):
+class LocationMin:
     id: str
     umu_id: str
     label_code: Optional[str]
 
 
 @dataclass
-class LocationContentMin(DictModelMixin):
+class LocationContentMin:
     id: str
     umu_id: str
     item_id: str

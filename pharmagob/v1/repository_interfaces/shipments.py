@@ -9,7 +9,7 @@ class ShipmentRepositoryInterface(BaseRepositoryInterface):
     def query_paginated(
         self,
         page: Optional[int] = None,
-        and_conditions: List[tuple] = None,
+        and_conditions: Optional[List[tuple]] = None,
         sort: Optional[List[Tuple[str, int]]] = None,
         limit: Optional[int] = None,
     ) -> Tuple[int, Iterator[dict]]:

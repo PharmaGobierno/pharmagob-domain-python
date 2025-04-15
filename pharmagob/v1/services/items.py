@@ -14,7 +14,7 @@ class ItemService(BaseService[ItemModel, ItemRepositoryInterface]):
 
     def paginated_query(
         self,
-        conditions: List[tuple] = None,
+        conditions: Optional[List[tuple]] = None,
         page: Optional[int] = None,
         limit: Optional[int] = None,
         sort: Optional[List[Tuple[str, int]]] = None,

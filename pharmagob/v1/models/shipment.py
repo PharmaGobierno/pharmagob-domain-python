@@ -39,4 +39,5 @@ class ShipmentModel(BaseModel):
     review_status: ReviewStatus = ReviewStatus.NOT_EVALUATED
 
     def __post_init__(self):
+        super().__post_init__()
         self._id = uuid_by_params(self.order_number, self.load_id)
