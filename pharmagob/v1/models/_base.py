@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field, fields, is_dataclass
+from dataclasses import asdict, dataclass, field, fields, is_dataclass
 from enum import Enum
 from time import time
 from typing import Generic, TypeVar
@@ -33,6 +33,9 @@ class BaseModel:
                 f"__entity_name__ must be defined at " f"{cls.__class__.__name__} model"
             )
         return str(getattr(cls, "__entity_name__", None))
+
+    def dict(self):
+        return asdict(self)
 
     @classmethod
     def __dict_to_dataclasses(cls, instance):
