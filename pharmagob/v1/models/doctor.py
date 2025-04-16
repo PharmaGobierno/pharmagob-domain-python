@@ -15,4 +15,6 @@ class DoctorModel(BaseModel, UpdatableModel):
     employee_number: str
     profesional_licence: str
     specialty: Optional[str]
-    service: str
+    service: list[str]
+    level: Optional[str]
+    status: str
