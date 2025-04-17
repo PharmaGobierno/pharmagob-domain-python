@@ -38,7 +38,7 @@ class BaseModel:
         return asdict(self)
 
     @classmethod
-    def __dict_to_dataclasses(cls, instance):
+    def _dict_to_dataclasses(cls, instance):
         """Convert all fields of type `dataclass` into an instance of the
         specified data class if the current value is of type dict."""
         for f in fields(cls):
@@ -53,16 +53,25 @@ class BaseModel:
             setattr(instance, f.name, new_value)
 
     def __post_init__(self):
-        self.__dict_to_dataclasses(self)
+        self._dict_to_dataclasses(self)
 
 
 @dataclass(kw_only=True)
-class UpdatableModel:
+class UpdatableModel(BaseModel):
     updated_at: int = field(default_factory=lambda: int(time() * 1000))
 
+    def update(self, data: dict):
+        """Update the model with the given data."""
+        data.update({"updated_at": int(time() * 1000)})
+        valid_fields = {f.name for f in fields(self)}
+        for key, value in data.items():
+            if key in valid_fields:
+                setattr(self, key, value)
+        self._dict_to_dataclasses(self)
+
 
 @dataclass(kw_only=True)
-class EventfulModel(Generic[EventAttributeT]):
+class EventfulModel(BaseModel, Generic[EventAttributeT]):
     """A generic dataclass representing a event entity with
     transition timestamp. Using in event sourcing entities
 
