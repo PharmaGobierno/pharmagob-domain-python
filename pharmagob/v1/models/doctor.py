@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from ._base import BaseModel, UpdatableModel
+from ._base import UpdatableModel, uuid_by_params
 
 
 @dataclass(kw_only=True)
-class DoctorModel(BaseModel, UpdatableModel):
+class DoctorModel(UpdatableModel):
     __entity_name__ = "doctors"
 
     umu_id: str
@@ -18,3 +18,7 @@ class DoctorModel(BaseModel, UpdatableModel):
     service: list[str]
     level: Optional[str]
     status: str
+    job_position: Optional[str]
+
+    def __post_init__(self):
+        self._id = uuid_by_params(self.employee_number, self.profesional_licence)

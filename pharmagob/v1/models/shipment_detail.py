@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from ._base import BaseModel, UpdatableModel, uuid_by_params
+from ._base import UpdatableModel, uuid_by_params
 from .minified import min_models
 
 
 @dataclass(kw_only=True)
-class ShipmentDetailModel(BaseModel, UpdatableModel):
+class ShipmentDetailModel(UpdatableModel):
     __entity_name__ = "shipment-details"
 
     umu_id: str

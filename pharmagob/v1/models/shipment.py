@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
 
-from ._base import BaseModel, UpdatableModel, uuid_by_params
+from ._base import UpdatableModel, uuid_by_params
 from .minified import min_models
 
 
@@ -25,7 +25,7 @@ class ShipmentType(str, Enum):
 
 
 @dataclass(kw_only=True)
-class ShipmentModel(BaseModel, UpdatableModel):
+class ShipmentModel(UpdatableModel):
     __entity_name__ = "shipments"
 
     umu_id: str

@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from ._base import BaseModel, UpdatableModel
+from ._base import UpdatableModel
 
 
 @dataclass(kw_only=True)
-class LocationModel(BaseModel, UpdatableModel):
+class LocationModel(UpdatableModel):
     __entity_name__ = "locations"
 
     umu_id: str
