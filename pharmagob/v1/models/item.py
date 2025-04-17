@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from ._base import BaseModel, UpdatableModel
+from ._base import UpdatableModel
 
 
 @dataclass(kw_only=True)
-class ItemModel(BaseModel, UpdatableModel):
+class ItemModel(UpdatableModel):
     __entity_name__ = "items"
 
     foreign_id: str

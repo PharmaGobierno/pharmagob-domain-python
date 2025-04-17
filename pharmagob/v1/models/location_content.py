@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 from typing import List
 
-from ._base import BaseModel, UpdatableModel, uuid_by_params
+from ._base import UpdatableModel, uuid_by_params
 from .minified import min_models
 
 
 @dataclass(kw_only=True)
-class LocationContentModel(BaseModel, UpdatableModel):
+class LocationContentModel(UpdatableModel):
     __entity_name__ = "location-contents"
 
     umu_id: str
