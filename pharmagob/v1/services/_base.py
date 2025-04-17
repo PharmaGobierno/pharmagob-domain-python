@@ -35,8 +35,10 @@ class BaseService(Generic[ModelT, RepositoryInterfaceT]):
         *,
         sort: Optional[List[Tuple[str, int]]] = None,
         projection: Optional[Union[list, dict]] = None,
-    ) -> ModelT:
+    ) -> Optional[ModelT]:
         data: dict = self.repository.get(entity_id, sort=sort, projection=projection)
+        if not data:
+            return None
         return self.__model__(**data)
 
     def get_paginated(
