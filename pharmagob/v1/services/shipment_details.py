@@ -13,11 +13,8 @@ class ShipmentDetailService(
 ):
     __model__ = ShipmentDetailModel
 
-    def __init__(self, repository: ShipmentDetailRepositoryInterface):
-        super().__init__(repository)
-
     def get_by_shipment_id(
         self, shipment_id: str
     ) -> Tuple[int, Iterator[ShipmentDetailModel]]:
-        count, result_cursor = self.repository.get_by_shipment_id(shipment_id)
-        return count, map(lambda r: ShipmentDetailModel(**r), result_cursor)
+        count, result = self.repository.get_by_shipment_id(shipment_id)
+        return count, map(lambda r: ShipmentDetailModel(**r), result)

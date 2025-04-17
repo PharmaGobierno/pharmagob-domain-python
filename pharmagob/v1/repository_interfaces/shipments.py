@@ -1,16 +1,19 @@
 from abc import abstractmethod
-from typing import Iterator, List, Optional, Tuple
+from typing import List, Optional, Tuple
 
 from ._base import BaseRepositoryInterface
 
 
 class ShipmentRepositoryInterface(BaseRepositoryInterface):
     @abstractmethod
-    def query_paginated(
+    def sarch_by_order_number(
         self,
-        page: Optional[int] = None,
-        and_conditions: Optional[List[tuple]] = None,
-        sort: Optional[List[Tuple[str, int]]] = None,
-        limit: Optional[int] = None,
-    ) -> Tuple[int, Iterator[dict]]:
+        order_number: str,
+        *,
+        created_at_gt: int,
+        created_at_lt: int,
+        page: int,
+        limit: int,
+        review_status: Optional[str] = None,
+    ) -> Tuple[int, List[dict]]:
         raise NotImplementedError

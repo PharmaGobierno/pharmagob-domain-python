@@ -6,6 +6,3 @@ from ._base import BaseService
 
 class DoctorService(BaseService[DoctorModel, DoctorRepositoryInterface]):
     __model__ = DoctorModel
-
-    def __init__(self, repository: DoctorRepositoryInterface):
-        super().__init__(repository)
