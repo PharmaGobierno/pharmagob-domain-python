@@ -36,6 +36,7 @@ class BaseRepositoryInterface(metaclass=ABCMeta):
         self,
         entity_id: str,
         *,
+        umu_id: Optional[str] = None,
         sort: Optional[List[Tuple[str, int]]] = None,
         projection: Optional[Union[list, dict]] = None,
     ) -> dict:
@@ -47,6 +48,7 @@ class BaseRepositoryInterface(metaclass=ABCMeta):
         page: int,
         limit: int,
         *,
+        umu_id: Optional[str] = None,
         and_conditions: Optional[List[tuple]] = None,
         sort: Optional[List[Tuple[str, int]]] = None,
         projection: Optional[List[str]] = None,

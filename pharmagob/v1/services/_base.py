@@ -33,10 +33,13 @@ class BaseService(Generic[ModelT, RepositoryInterfaceT]):
         self,
         entity_id,
         *,
+        umu_id: Optional[str] = None,
         sort: Optional[List[Tuple[str, int]]] = None,
         projection: Optional[Union[list, dict]] = None,
     ) -> Optional[ModelT]:
-        data: dict = self.repository.get(entity_id, sort=sort, projection=projection)
+        data: dict = self.repository.get(
+            entity_id, umu_id=umu_id, sort=sort, projection=projection
+        )
         if not data:
             return None
         return self.__model__(**data)
@@ -46,11 +49,17 @@ class BaseService(Generic[ModelT, RepositoryInterfaceT]):
         page: int,
         limit: int,
         *,
+        umu_id: Optional[str] = None,
         and_conditions: Optional[List[tuple]] = None,
         sort: Optional[List[Tuple[str, int]]] = None,
         projection: Optional[List[str]] = None,
     ) -> Tuple[int, Iterator[ModelT]]:
         count, result = self.repository.get_paginated(
-            page, limit, and_conditions=and_conditions, sort=sort, projection=projection
+            page,
+            limit,
+            umu_id=umu_id,
+            and_conditions=and_conditions,
+            sort=sort,
+            projection=projection,
         )
         return count, map(lambda itm: self.__model__(**itm), result)

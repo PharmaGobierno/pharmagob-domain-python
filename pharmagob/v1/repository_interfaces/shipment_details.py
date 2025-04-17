@@ -10,6 +10,7 @@ class ShipmentDetailRepositoryInterface(BaseRepositoryInterface):
         self,
         shipment_id,
         *,
+        umu_id: Optional[str] = None,
         sort: Optional[List[Tuple[str, int]]] = None,
         projection: Optional[Union[list, dict]] = None,
         limit: Optional[int] = None,
