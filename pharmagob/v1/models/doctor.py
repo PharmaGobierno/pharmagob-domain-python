@@ -21,4 +21,5 @@ class DoctorModel(UpdatableModel):
     job_position: Optional[str]
 
     def __post_init__(self):
+        super().__post_init__()
         self._id = uuid_by_params(self.employee_number, self.profesional_licence)

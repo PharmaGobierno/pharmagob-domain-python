@@ -18,4 +18,5 @@ class LocationContentModel(UpdatableModel):
     last_author: min_models.UserMin
 
     def __post_init__(self):
+        super().__post_init__()
         self._id = uuid_by_params(self.item.id, self.lot, self.location.id)

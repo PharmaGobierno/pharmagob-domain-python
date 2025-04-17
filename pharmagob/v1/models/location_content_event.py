@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
 
-from ._base import BaseModel, uuid_by_params
+from ._base import EventfulModel, uuid_by_params
 from .minified import min_models
 
 
@@ -13,13 +13,11 @@ class Events(str, Enum):
 
 
 @dataclass(kw_only=True)
-class LocationContentEventModel(BaseModel):
+class LocationContentEventModel(EventfulModel[Events]):
     __entity_name__ = "location-content-events"
 
     umu_id: str
     location_content: min_models.LocationContentMin
-    event: Events
-    transition_timestamp: int
     author: Optional[min_models.UserMin]
     context: Optional[dict]
 
