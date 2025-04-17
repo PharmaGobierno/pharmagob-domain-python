@@ -9,8 +9,6 @@ from ._base import BaseService
 class LocationService(BaseService[LocationModel, LocationRepositoryInterface]):
     __model__ = LocationModel
 
-    def __init__(self, repository: LocationRepositoryInterface):
-        super().__init__(repository)
-
-    def get_by_umu_id(self, umu_id: str) -> Tuple[int, Iterator[dict]]:
-        return self.repository.get_by_umu_id(umu_id)
+    def get_by_umu_id(self, umu_id: str) -> Tuple[int, Iterator[LocationModel]]:
+        count, result = self.repository.get_by_umu_id(umu_id)
+        return count, map(lambda r: LocationModel(**r), result)

@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import List, Optional, Tuple, Union
+from typing import Iterator, List, Optional, Tuple, Union
 
 
 class BaseRepositoryInterface(metaclass=ABCMeta):
@@ -7,13 +7,16 @@ class BaseRepositoryInterface(metaclass=ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         return (
-            hasattr(subclass, "get")
-            and callable(subclass.get)
+            hasattr(subclass, "create")
+            and callable(subclass.create)
             and hasattr(subclass, "update")
             and callable(subclass.update)
-            or hasattr(subclass, "create")
-            and callable(subclass.create)
-            or NotImplemented
+            and hasattr(subclass, "set")
+            and callable(subclass.set)
+            and hasattr(subclass, "get")
+            and callable(subclass.get)
+            and hasattr(subclass, "get_paginated")
+            and callable(subclass.get_paginated)
         )
 
     @abstractmethod
@@ -34,6 +37,18 @@ class BaseRepositoryInterface(metaclass=ABCMeta):
         entity_id: str,
         *,
         sort: Optional[List[Tuple[str, int]]] = None,
-        projection: Optional[Union[list, dict]] = None
+        projection: Optional[Union[list, dict]] = None,
     ) -> dict:
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_paginated(
+        self,
+        page: int,
+        limit: int,
+        *,
+        and_conditions: Optional[List[tuple]] = None,
+        sort: Optional[List[Tuple[str, int]]] = None,
+        projection: Optional[List[str]] = None,
+    ) -> Tuple[int, Iterator[dict]]:
         raise NotImplementedError
