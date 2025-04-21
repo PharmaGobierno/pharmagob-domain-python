@@ -4,6 +4,7 @@ from typing import Any, Optional
 from pharmagob.v1.models.location_content import LocationContentModel
 from pharmagob.v1.models.minified import min_models
 from pharmagob.v1.models.shipment import ShipmentModel
+from pharmagob.v1.models.shipment_detail import ShipmentDetailModel
 
 
 @dataclass
@@ -44,3 +45,15 @@ class LocationContentEventsPubsubMessage(BasePubsubMessage):
     @classmethod
     def topic(cls) -> str:
         return "location-content-events"
+
+
+@dataclass(kw_only=True)
+class ValidationShipmentDetailsPubsubMessage(BasePubsubMessage):
+    payload: ShipmentDetailModel
+    status: str
+    origin: Optional[str] = None
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "shipment-detail-validations"
