@@ -7,8 +7,8 @@ from .minified import min_models
 
 
 class QuantityEvents(str, Enum):
-    ACCEPTED = "ACCEPTED"
-    DISPATCHED = "DISPATCHED"
+    INCREASE = "INCREASE"
+    SUBSTRACT = "SUBSTRACT"
 
 
 @dataclass(kw_only=True)
