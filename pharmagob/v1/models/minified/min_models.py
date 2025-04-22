@@ -54,3 +54,14 @@ class LocationContentMin:
     lot: str
     location_id: str
     quantity: int
+
+
+@dataclass
+class DispatchRecordMin:
+    id: str
+    umu_id: str
+    reference_id: str
+    dispatch_type: str
+    dispatch_date: int
+    doctor_id: Optional[str]
+    patien_id: Optional[str]
