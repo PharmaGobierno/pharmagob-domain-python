@@ -50,6 +50,7 @@ class LocationContentEventsPubsubMessage(BasePubsubMessage):
 @dataclass(kw_only=True)
 class ValidationShipmentDetailsPubsubMessage(BasePubsubMessage):
     payload: ShipmentDetailModel
+    accepted_item_quantity: int
     status: str
     origin: Optional[str] = None
     version: str = "1"
