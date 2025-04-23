@@ -17,6 +17,7 @@ class LocationContentQuantityLogModel(BaseModel):
 
     umu_id: str
     location_content: min_models.LocationContentMin
+    quantity: int
     quantity_event: QuantityEvents
     origin_timestamp: int
     author: Optional[min_models.UserMin]
