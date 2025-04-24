@@ -23,7 +23,7 @@ def uuid_by_params(*args):
 @dataclass
 class BaseModel:
     _id: str = field(default_factory=lambda: str(uuid4()))
-    created_at: int = field(default_factory=lambda: int(time() * 1000))
+    created_at: int = field(default_factory=lambda: round(time() * 1000))
     version: str = "1.0.0"
 
     @classmethod
@@ -58,11 +58,11 @@ class BaseModel:
 
 @dataclass(kw_only=True)
 class UpdatableModel(BaseModel):
-    updated_at: int = field(default_factory=lambda: int(time() * 1000))
+    updated_at: int = field(default_factory=lambda: round(time() * 1000))
 
     def update(self, data: dict):
         """Update the model with the given data."""
-        data.update({"updated_at": int(time() * 1000)})
+        data.update({"updated_at": round(time() * 1000)})
         valid_fields = {f.name for f in fields(self)}
         for key, value in data.items():
             if key in valid_fields:
