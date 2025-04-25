@@ -74,11 +74,11 @@ class ShipmentIntegrationsPubsubMessage(BasePubsubMessage):
 
 
 @dataclass(kw_only=True)
-class DispatchRecordPubsubMessage(BasePubsubMessage):
+class DispatchRecordsPubsubMessage(BasePubsubMessage):
     payload: DispatchRecordModel
     status: str
     version: str = "1"
 
     @classmethod
     def topic(cls) -> str:
-        return "shipment-integrations"
+        return "dispatch-records"
