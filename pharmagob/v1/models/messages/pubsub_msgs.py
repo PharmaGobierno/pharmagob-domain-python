@@ -1,4 +1,5 @@
 from dataclasses import asdict, dataclass
+from time import time
 from typing import Any, Optional
 
 from pharmagob.v1.models.location_content import LocationContentModel
@@ -11,9 +12,9 @@ from pharmagob.v1.models.shipment_detail import ShipmentDetailModel
 class BasePubsubMessage:
     payload: Any
     origin_timestamp: int
-    published_at: int
     author: min_models.UserMin
     version: str
+    published_at: int = round(time() * 1000)
     context: Optional[dict] = None
 
     def dict(self):
@@ -28,6 +29,7 @@ class BasePubsubMessage:
 class ShipmentStatusPubsubMessage(BasePubsubMessage):
     payload: ShipmentModel
     status: str
+    items: Optional[list[dict]] = None
     origin: Optional[str] = None
     version: str = "1"
 
@@ -57,3 +59,14 @@ class ValidationShipmentDetailsPubsubMessage(BasePubsubMessage):
     @classmethod
     def topic(cls) -> str:
         return "shipment-detail-validations"
+
+
+@dataclass(kw_only=True)
+class ShipmentIntegrationsPubsubMessage(BasePubsubMessage):
+    payload: dict
+    origin: str
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "shipment-integrations"
