@@ -62,6 +62,6 @@ class DispatchRecordMin:
     umu_id: str
     reference_id: str
     dispatch_type: str
-    dispatch_date: int
+    dispatch_at: int
     doctor_id: Optional[str]
     patien_id: Optional[str]

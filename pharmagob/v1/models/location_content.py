@@ -14,7 +14,7 @@ class LocationContentModel(UpdatableModel):
     quantity: int
     item: min_models.ItemlMin
     location: min_models.LocationMin
-    shipment_detail: List[min_models.ShipmentDetailMin]
+    shipment_details: List[min_models.ShipmentDetailMin]
     last_author: min_models.UserMin
 
     def __post_init__(self):

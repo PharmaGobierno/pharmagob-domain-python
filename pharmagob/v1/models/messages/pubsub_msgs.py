@@ -2,6 +2,7 @@ from dataclasses import asdict, dataclass
 from time import time
 from typing import Any, Optional
 
+from pharmagob.v1.models.dispatch_record import DispatchRecordModel
 from pharmagob.v1.models.location_content import LocationContentModel
 from pharmagob.v1.models.minified import min_models
 from pharmagob.v1.models.shipment import ShipmentModel
@@ -65,6 +66,17 @@ class ValidationShipmentDetailsPubsubMessage(BasePubsubMessage):
 class ShipmentIntegrationsPubsubMessage(BasePubsubMessage):
     payload: dict
     origin: str
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "shipment-integrations"
+
+
+@dataclass(kw_only=True)
+class DispatchRecordPubsubMessage(BasePubsubMessage):
+    payload: DispatchRecordModel
+    status: str
     version: str = "1"
 
     @classmethod
