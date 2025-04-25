@@ -1,4 +1,4 @@
-from typing import Iterator, Optional, Tuple
+from typing import Iterator, Tuple
 
 from pharmagob.v1.models.patient import PatientModel
 from pharmagob.v1.repository_interfaces.patients import PatientRepositoryInterface
