@@ -21,6 +21,7 @@ class PatientModel(UpdatableModel):
     municipality: str
     neighborhood: Optional[str]
     country: Optional[str]
+    street_address: Optional[str]
 
     def __post_init__(self):
         super().__post_init__()
