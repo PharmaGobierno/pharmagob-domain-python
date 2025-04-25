@@ -15,8 +15,8 @@ class ShipmentMin:
     umu_id: str
     order_number: str
     load_id: str
+    shipment_type: str
     order_id: Optional[str] = None
-    shipment_type: Optional[str] = None
 
 
 @dataclass
