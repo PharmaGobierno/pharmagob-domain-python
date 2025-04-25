@@ -15,6 +15,8 @@ class LocationContentRepositoryInterface(BaseRepositoryInterface):
         page: int,
         limit: int,
         umu_id: Optional[str] = None,
+        quantity_gt: Optional[int] = None,
+        quantity_lt: Optional[int] = None,
         lot: Optional[str] = None,
     ) -> Tuple[int, List[dict]]:
         raise NotImplementedError

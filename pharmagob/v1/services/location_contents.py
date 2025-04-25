@@ -22,6 +22,8 @@ class LocationContentService(
         created_at_lt: int,
         page: int,
         limit: int,
+        quantity_gt: Optional[int] = None,
+        quantity_lt: Optional[int] = None,
         lot: Optional[str] = None
     ) -> Tuple[int, Iterator[LocationContentModel]]:
         count, result = self.repository.search_by_item(
@@ -31,6 +33,8 @@ class LocationContentService(
             page=page,
             limit=limit,
             umu_id=umu_id,
+            quantity_gt=quantity_gt,
+            quantity_lt=quantity_lt,
             lot=lot,
         )
         return count, map(lambda r: LocationContentModel(**r), result)
