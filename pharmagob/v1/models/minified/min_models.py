@@ -10,6 +10,29 @@ class UserMin:
 
 
 @dataclass
+class DoctorMin:
+    id: str
+    umu_id: str
+    name: str
+    last_name_1: str
+    last_name_2: Optional[str]
+    employee_number: str
+    profesional_licence: str
+
+
+@dataclass
+class PatientMin:
+    id: str
+    umu_id: str
+    name: str
+    last_name_1: str
+    last_name_2: Optional[str]
+    curp: str
+    birth: int
+    email: Optional[str]
+
+
+@dataclass
 class ShipmentMin:
     id: str
     umu_id: str

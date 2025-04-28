@@ -2,7 +2,8 @@ from dataclasses import dataclass
 from enum import Enum
 
 from ._base import UpdatableModel
-from .minified import min_properties
+from .minified import min_properties, min_models
+
 
 
 class Status(str, Enum):
@@ -19,7 +20,12 @@ class DispatchRecordModel(UpdatableModel):
     __entity_name__ = "dispatch-records"
 
     umu_id: str
+    reference_id: str
     dispatch_type: DispatchType
+    dispatch_at: int
+    service: str
     status: Status = Status.DISPATCHED
+    author: min_models.UserMin
+    doctor: min_models.DoctorMin
+    patient: min_models.PatientMin
     dispatch_details: list[min_properties.DispatchDetailMin]
-    # TODO: agregar las demas propiedades
