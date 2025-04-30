@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
 
-from ._base import UpdatableModel
+from typing import Optional
+from ._base import UpdatableModel, uuid_by_params
 from .minified import min_properties, min_models
 
 
@@ -12,7 +13,7 @@ class Status(str, Enum):
 
 class DispatchType(str, Enum):
     INHOSPITAL_DISPENSING = "INHOSPITAL_DISPENSING"
-    PRESCRIPTION = "PRESCRIPTION"
+    PRESCRIPTION = "v"
 
 
 @dataclass(kw_only=True)
@@ -26,6 +27,10 @@ class DispatchRecordModel(UpdatableModel):
     service: str
     status: Status = Status.DISPATCHED
     author: min_models.UserMin
-    doctor: min_models.DoctorMin
-    patient: min_models.PatientMin
+    doctor: Optional[min_models.DoctorMin]
+    patient: Optional[min_models.PatientMin]
     dispatch_details: list[min_properties.DispatchDetailMin]
+
+    def __post_init__(self):
+        super().__post_init__()
+        self._id = uuid_by_params(self.reference_id)
