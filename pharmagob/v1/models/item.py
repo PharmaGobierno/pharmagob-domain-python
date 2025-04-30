@@ -15,8 +15,7 @@ class ItemModel(UpdatableModel):
     sub_category: str
     clasification: str
     description: str
-    short_description: Optional[str]
-    name: Optional[str]
+    short_description: str
     controller_group: Optional[str]
     is_packing: Optional[bool]
     pieces_package: Optional[int]

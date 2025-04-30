@@ -60,8 +60,7 @@ class ItemlMin:
     id: str
     foreign_id: str
     # description: str
-    # short_description: Optional[str]
-    name: Optional[str]
+    # short_description: str
 
 
 @dataclass
