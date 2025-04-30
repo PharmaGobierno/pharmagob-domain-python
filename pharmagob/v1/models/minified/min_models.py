@@ -59,7 +59,9 @@ class ShipmentDetailMin:
 class ItemlMin:
     id: str
     foreign_id: str
-    name: str
+    # description: str
+    # short_description: Optional[str]
+    name: Optional[str]
 
 
 @dataclass
