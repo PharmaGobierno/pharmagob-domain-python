@@ -87,4 +87,4 @@ class DispatchRecordMin:
     dispatch_type: str
     dispatch_at: int
     doctor_id: Optional[str]
-    patien_id: Optional[str]
+    patient_id: Optional[str]
