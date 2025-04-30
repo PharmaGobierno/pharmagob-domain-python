@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 
+from typing import Optional
 from ._base import UpdatableModel
 from .minified import min_properties, min_models
 
@@ -26,6 +27,6 @@ class DispatchRecordModel(UpdatableModel):
     service: str
     status: Status = Status.DISPATCHED
     author: min_models.UserMin
-    doctor: min_models.DoctorMin
-    patient: min_models.PatientMin
+    doctor: Optional[min_models.DoctorMin]
+    patient: Optional[min_models.PatientMin]
     dispatch_details: list[min_properties.DispatchDetailMin]
