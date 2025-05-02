@@ -62,6 +62,7 @@ class ItemlMin:
     foreign_id: str
     description: Optional[str] = None  # TODO: required
     short_description: Optional[str] = None  # TODO: required
+    name: Optional[str] = None  # TODO: remove
 
 
 @dataclass
