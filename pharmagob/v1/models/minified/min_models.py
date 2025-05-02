@@ -59,8 +59,8 @@ class ShipmentDetailMin:
 class ItemlMin:
     id: str
     foreign_id: str
-    # description: str
-    # short_description: str
+    description: Optional[str] = None  # TODO: required
+    short_description: Optional[str] = None  # TODO: required
 
 
 @dataclass
@@ -76,6 +76,7 @@ class LocationContentMin:
     umu_id: str
     item_id: str
     lot: str
+    expiration_date: int
     location_id: str
     quantity: int
 

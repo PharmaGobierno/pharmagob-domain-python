@@ -9,14 +9,14 @@ class ItemModel(UpdatableModel):
     __entity_name__ = "items"
 
     foreign_id: str
-    disabled: bool = False
     is_controlled: bool
     category: str
     sub_category: str
     clasification: str
     description: str
     short_description: str
-    controller_group: Optional[str]
-    is_packing: Optional[bool]
-    pieces_package: Optional[int]
-    unit_price: Optional[float]
+    disabled: bool = False
+    controller_group: Optional[str] = None
+    is_packing: Optional[bool] = None
+    pieces_package: Optional[int] = None
+    unit_price: Optional[float] = None

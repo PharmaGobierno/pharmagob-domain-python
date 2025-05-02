@@ -11,6 +11,7 @@ class LocationContentModel(UpdatableModel):
 
     umu_id: str
     lot: str
+    expiration_date: int
     quantity: int
     item: min_models.ItemlMin
     location: min_models.LocationMin

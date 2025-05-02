@@ -18,18 +18,18 @@ class LocationContentService(
         item_id: str,
         *,
         umu_id: str,
-        created_at_gt: int,
-        created_at_lt: int,
         page: int,
         limit: int,
         quantity_gt: Optional[int] = None,
         quantity_lt: Optional[int] = None,
+        expiration_date_gt: Optional[int] = None,
+        expiration_date_lt: Optional[int] = None,
         lot: Optional[str] = None
     ) -> Tuple[int, Iterator[LocationContentModel]]:
         count, result = self.repository.search_by_item(
             item_id,
-            created_at_gt=created_at_gt,
-            created_at_lt=created_at_lt,
+            expiration_date_gt=expiration_date_gt,
+            expiration_date_lt=expiration_date_lt,
             page=page,
             limit=limit,
             umu_id=umu_id,

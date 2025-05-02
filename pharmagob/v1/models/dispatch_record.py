@@ -1,10 +1,9 @@
 from dataclasses import dataclass
 from enum import Enum
-
 from typing import Optional
-from ._base import UpdatableModel, uuid_by_params
-from .minified import min_properties, min_models
 
+from ._base import UpdatableModel, uuid_by_params
+from .minified import min_models, min_properties
 
 
 class Status(str, Enum):

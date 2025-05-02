@@ -22,8 +22,8 @@ class DispatchRecordService(
         page: int,
         limit: int,
         umu_id: Optional[str] = None,
-        dispatch_gt: Optional[int] = None,
-        dispatch_lt: Optional[int] = None,
+        dispatch_at_gt: Optional[int] = None,
+        dispatch_at_lt: Optional[int] = None,
         service: Optional[str] = None,
     ) -> Tuple[int, Iterator[DispatchRecordModel]]:
         count, result = self.repository.search_by_reference(
@@ -33,8 +33,8 @@ class DispatchRecordService(
             page=page,
             limit=limit,
             umu_id=umu_id,
-            dispatch_gt=dispatch_gt,
-            dispatch_lt=dispatch_lt,
+            dispatch_at_gt=dispatch_at_gt,
+            dispatch_at_lt=dispatch_at_lt,
             service=service,
         )
         return count, map(lambda r: DispatchRecordModel(**r), result)

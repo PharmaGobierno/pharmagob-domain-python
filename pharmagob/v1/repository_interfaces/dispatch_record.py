@@ -10,13 +10,13 @@ class DispatchRecordRepositoryInterface(BaseRepositoryInterface):
         self,
         reference_id: str,
         *,
-        created_at_gt: int,
-        created_at_lt: int,
         page: int,
         limit: int,
         umu_id: Optional[str] = None,
-        dispatch_gt: Optional[int] = None,
-        dispatch_lt: Optional[int] = None,
+        created_at_gt: Optional[int] = None,
+        created_at_lt: Optional[int] = None,
+        dispatch_at_gt: Optional[int] = None,
+        dispatch_at_lt: Optional[int] = None,
         service: Optional[str] = None,
     ) -> Tuple[int, List[dict]]:
         raise NotImplementedError

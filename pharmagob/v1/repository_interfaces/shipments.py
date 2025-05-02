@@ -10,11 +10,11 @@ class ShipmentRepositoryInterface(BaseRepositoryInterface):
         self,
         order_number: str,
         *,
-        created_at_gt: int,
-        created_at_lt: int,
         page: int,
         limit: int,
         umu_id: Optional[str] = None,
-        review_status: Optional[str] = None,
+        created_at_gt: Optional[int] = None,
+        created_at_lt: Optional[int] = None,
+        review_status: Optional[List[str]] = None,
     ) -> Tuple[int, List[dict]]:
         raise NotImplementedError
