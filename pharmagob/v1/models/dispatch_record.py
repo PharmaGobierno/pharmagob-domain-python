@@ -12,7 +12,7 @@ class Status(str, Enum):
 
 class DispatchType(str, Enum):
     INHOSPITAL_DISPENSING = "INHOSPITAL_DISPENSING"
-    PRESCRIPTION = "v"
+    PRESCRIPTION = "PRESCRIPTION"
 
 
 @dataclass(kw_only=True)
