@@ -48,11 +48,12 @@ class ShipmentDetailMin:
     umu_id: str
     item_id: str
     lot: str
+    expiration_date: int
     quantity: int
     shipment_id: str
     shipment_order_number: str
     shipment_load_id: str
-    brand: Optional[str]
+    brand: Optional[str] = None
 
 
 @dataclass

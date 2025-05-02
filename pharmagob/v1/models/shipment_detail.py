@@ -13,10 +13,10 @@ class ShipmentDetailModel(UpdatableModel):
     shipment: min_models.ShipmentMin
     item: min_models.ItemlMin
     lot: str
-    expiration_date: Optional[int]
+    expiration_date: int
     quantity: int
-    brand: Optional[str]
     last_author: Optional[min_models.UserMin]
+    brand: Optional[str] = None
 
     def __post_init__(self):
         super().__post_init__()
