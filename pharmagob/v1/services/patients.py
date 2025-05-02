@@ -1,4 +1,4 @@
-from typing import Iterator, Tuple
+from typing import Iterator, Optional, Tuple
 
 from pharmagob.v1.models.patient import PatientModel
 from pharmagob.v1.repository_interfaces.patients import PatientRepositoryInterface
@@ -14,10 +14,10 @@ class PatientService(BaseService[PatientModel, PatientRepositoryInterface]):
         curp: str,
         *,
         umu_id: str,
-        created_at_gt: int,
-        created_at_lt: int,
         page: int,
         limit: int,
+        created_at_gt: Optional[int] = None,
+        created_at_lt: Optional[int] = None,
     ) -> Tuple[int, Iterator[PatientModel]]:
         count, result = self.repository.search_by_curp(
             curp,
