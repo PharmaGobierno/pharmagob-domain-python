@@ -59,7 +59,7 @@ class DoctorModel(UpdatableModel):
     profesional_licence: str
     specialty: Specialty
     service: list[Services]
-    status: Status
+    status: Status = Status.ACTIVE
     level: Optional[Level] = None
     job_position: Optional[Job_Position] = None
 
