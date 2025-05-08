@@ -21,6 +21,9 @@ class BaseService(Generic[ModelT, RepositoryInterfaceT]):
         data = entity.dict()
         return self.repository.update(entity_id, data=data)
 
+    def update_many(self, and_conditions: Optional[List[tuple]], *, data: dict) -> int:
+        return self.repository.update_many(and_conditions, data=data)
+
     def set(
         self, entity_id, *, entity: ModelT, write_only_if_insert: bool = False
     ) -> int:

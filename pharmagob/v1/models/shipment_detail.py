@@ -17,6 +17,7 @@ class ShipmentDetailModel(UpdatableModel):
     quantity: int
     last_author: Optional[min_models.UserMin]
     brand: Optional[str] = None
+    accepted_quantity: Optional[int] = None
 
     def __post_init__(self):
         super().__post_init__()

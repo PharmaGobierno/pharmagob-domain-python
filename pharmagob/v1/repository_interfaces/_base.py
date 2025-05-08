@@ -28,6 +28,10 @@ class BaseRepositoryInterface(metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
+    def update_many(self, and_conditions: Optional[List[tuple]], *, data: dict) -> int:
+        raise NotImplementedError
+
+    @abstractmethod
     def set(self, entity_id, *, data: dict, write_only_if_insert: bool = False) -> int:
         raise NotImplementedError
 
