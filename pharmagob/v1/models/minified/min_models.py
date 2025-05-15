@@ -63,7 +63,7 @@ class ItemlMin:
     description: str
     is_controlled: bool
     category: str
-    subcategory: str
+    sub_category: str
     short_description: Optional[str] = None
 
 
