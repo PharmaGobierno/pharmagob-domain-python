@@ -8,11 +8,27 @@ from .minified import min_models, min_properties
 
 class Status(str, Enum):
     DISPATCHED = "DISPATCHED"
+    PARTIAL_DISPATCHED = "PARTIAL_DISPATCHED"
 
+
+class Services(str, Enum):
+    SURGERY = "SURGERY"
+    OUTPATIENT_CONSULTATION = "OUTPATIENT_CONSULTATION"
+    HOSPITALIZATION = "HOSPITALIZATION"
+    PREVENTIVE_MEDICINE = "PREVENTIVE_MEDICINE"
+    REHABILITATION = "REHABILITATION"
+    EMERGENCY_CARE = "EMERGENCY_CARE"
+    LABORATORY = "LABORATORY"
 
 class DispatchType(str, Enum):
     INHOSPITAL_DISPENSING = "INHOSPITAL_DISPENSING"
     PRESCRIPTION = "PRESCRIPTION"
+
+
+class DispatchCategory(str, Enum):
+    MEDICATION = "MEDICATION"
+    MEDICAL_SUPPLIES = "MEDICAL_SUPPLIES"
+    MIXED = "MIXED"
 
 
 @dataclass(kw_only=True)
@@ -20,15 +36,15 @@ class DispatchRecordModel(UpdatableModel):
     __entity_name__ = "dispatch-records"
 
     umu_id: str
+    category: DispatchCategory
     reference_id: str
     dispatch_type: DispatchType
     dispatch_at: int
-    service: str
-    status: Status = Status.DISPATCHED
+    service: Services
+    status: Status
     author: min_models.UserMin
-    doctor: Optional[min_models.DoctorMin]
-    patient: Optional[min_models.PatientMin]
     dispatch_details: list[min_properties.DispatchDetailMin]
+    dispatch_notes: Optional[str] = None
 
     def __post_init__(self):
         super().__post_init__()
