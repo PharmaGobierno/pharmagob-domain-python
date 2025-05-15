@@ -60,9 +60,11 @@ class ShipmentDetailMin:
 class ItemlMin:
     id: str
     foreign_id: str
-    description: Optional[str] = None  # TODO: required
-    short_description: Optional[str] = None  # TODO: required
-    name: Optional[str] = None  # TODO: remove
+    description: str
+    is_controlled: bool
+    category: str
+    subcategory: str
+    short_description: Optional[str] = None
 
 
 @dataclass
