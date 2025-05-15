@@ -15,7 +15,7 @@ class LocationContentService(
 
     def search_by_item(
         self,
-        item_id: str,
+        search_str: str,
         *,
         umu_id: str,
         page: int,
@@ -27,7 +27,7 @@ class LocationContentService(
         lot: Optional[str] = None
     ) -> Tuple[int, Iterator[LocationContentModel]]:
         count, result = self.repository.search_by_item(
-            item_id,
+            search_str,
             expiration_date_gt=expiration_date_gt,
             expiration_date_lt=expiration_date_lt,
             page=page,

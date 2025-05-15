@@ -8,7 +8,7 @@ class LocationContentRepositoryInterface(BaseRepositoryInterface):
     @abstractmethod
     def search_by_item(
         self,
-        item_id: str,
+        search_str: str,
         *,
         page: int,
         limit: int,
