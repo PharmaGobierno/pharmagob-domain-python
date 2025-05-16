@@ -3,7 +3,7 @@ from enum import Enum
 from typing import Optional
 
 from ._base import UpdatableModel, uuid_by_params
-from .minified import min_models, min_properties
+from .minified import min_models
 
 
 class Status(str, Enum):
@@ -19,6 +19,7 @@ class Services(str, Enum):
     REHABILITATION = "REHABILITATION"
     EMERGENCY_CARE = "EMERGENCY_CARE"
     LABORATORY = "LABORATORY"
+
 
 class DispatchType(str, Enum):
     INHOSPITAL_DISPENSING = "INHOSPITAL_DISPENSING"
@@ -43,7 +44,7 @@ class DispatchRecordModel(UpdatableModel):
     service: Services
     status: Status
     author: min_models.UserMin
-    dispatch_details: list[min_properties.DispatchDetailMin]
+    dispatch_details: list[min_models.DispatchRecordDetailMin]
     dispatch_notes: Optional[str] = None
 
     def __post_init__(self):

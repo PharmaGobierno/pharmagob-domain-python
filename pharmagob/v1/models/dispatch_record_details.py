@@ -6,7 +6,6 @@ from ._base import UpdatableModel
 from .minified import min_models
 
 
-
 class AdministrationType(str, Enum):
     ORAL = "ORAL"
     INTRAVENOUS = "INTRAVENOUS"

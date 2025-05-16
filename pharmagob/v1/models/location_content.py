@@ -13,7 +13,7 @@ class LocationContentModel(UpdatableModel):
     lot: str
     expiration_date: int
     quantity: int
-    item: min_models.ItemlMin
+    item: min_models.ItemMin
     location: min_models.LocationMin
     shipment_details: List[min_models.ShipmentDetailMin]
     last_author: min_models.UserMin

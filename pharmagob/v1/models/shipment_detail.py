@@ -11,7 +11,7 @@ class ShipmentDetailModel(UpdatableModel):
 
     umu_id: str
     shipment: min_models.ShipmentMin
-    item: min_models.ItemlMin
+    item: min_models.ItemMin
     lot: str
     expiration_date: int
     quantity: int

@@ -57,7 +57,7 @@ class ShipmentDetailMin:
 
 
 @dataclass
-class ItemlMin:
+class ItemMin:
     id: str
     foreign_id: str
     description: str
@@ -92,5 +92,19 @@ class DispatchRecordMin:
     reference_id: str
     dispatch_type: str
     dispatch_at: int
-    doctor_id: Optional[str]
-    patient_id: Optional[str]
+    service: str
+    category: str
+
+
+@dataclass
+class DispatchRecordDetailMin:
+    id: str
+    umu_id: str
+    dispatch_record_id: str
+    dispatch_record_reference_id: str
+    item_id: str
+    quantity: int
+    dispatch_at: int
+    location_content_id: str
+    doctor_id: Optional[str] = None
+    patient_id: Optional[str] = None
