@@ -115,7 +115,7 @@ class DispatchRecordDetailsPubsubMessage(BasePubsubMessage):
 
     @classmethod
     def topic(cls) -> str:
-        return "dispatch-record_details"
+        return "dispatch-record-details"
 
     def get_attributes(self) -> Dict[str, str]:
         default_attributes = super().get_attributes()
