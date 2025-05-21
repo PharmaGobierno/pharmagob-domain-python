@@ -30,4 +30,3 @@ class DispatchRecordDetailModel(UpdatableModel):
     patient: Optional[min_models.PatientMin] = None
     patient_bed: Optional[str] = None
     notes: Optional[str] = None
-    dispatch_notes: Optional[str] = None
