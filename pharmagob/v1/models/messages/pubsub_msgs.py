@@ -3,6 +3,7 @@ from time import time
 from typing import Any, Dict, Optional
 
 from pharmagob.v1.models.dispatch_record import DispatchRecordModel
+from pharmagob.v1.models.dispatch_record_details import DispatchRecordDetailModel
 from pharmagob.v1.models.location_content import LocationContentModel
 from pharmagob.v1.models.minified import min_models
 from pharmagob.v1.models.shipment import ShipmentModel
@@ -105,3 +106,17 @@ class DispatchRecordsPubsubMessage(BasePubsubMessage):
     def get_attributes(self) -> Dict[str, str]:
         default_attributes = super().get_attributes()
         return {**default_attributes, "status": self.status}
+
+
+@dataclass(kw_only=True)
+class DispatchRecordDetailsPubsubMessage(BasePubsubMessage):
+    payload: DispatchRecordDetailModel
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "dispatch-record_details"
+
+    def get_attributes(self) -> Dict[str, str]:
+        default_attributes = super().get_attributes()
+        return default_attributes
