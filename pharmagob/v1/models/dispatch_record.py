@@ -44,7 +44,7 @@ class DispatchRecordModel(UpdatableModel):
     service: Services
     status: Status
     author: min_models.UserMin
-    dispatch_details: list[min_models.DispatchRecordDetailMin]
+    dispatch_details: list[min_models.DispatchRecordDetailMin]= None
     dispatch_notes: Optional[str] = None
 
     def __post_init__(self):
