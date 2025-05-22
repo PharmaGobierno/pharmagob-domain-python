@@ -49,4 +49,4 @@ class DispatchRecordModel(UpdatableModel):
 
     def __post_init__(self):
         super().__post_init__()
-        self._id = uuid_by_params(self.reference_id)
+        self._id = uuid_by_params(self.reference_id, self.umu_id)
