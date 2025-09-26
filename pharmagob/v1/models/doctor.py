@@ -57,11 +57,11 @@ class DoctorModel(UpdatableModel):
     last_name_2: Optional[str] = None
     employee_number: str
     profesional_licence: str
-    specialty: Specialty
-    service: list[Services]
+    specialty: str
+    service: list[str]
     status: Status = Status.ACTIVE
-    level: Optional[Level] = None
-    job_position: Optional[Job_Position] = None
+    level: Optional[str] = None
+    job_position: Optional[str] = None
 
     def __post_init__(self):
         super().__post_init__()

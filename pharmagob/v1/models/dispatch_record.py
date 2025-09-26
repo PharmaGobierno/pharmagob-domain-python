@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
+from typing import List, Optional
 
 from ._base import UpdatableModel, uuid_by_params
 from .minified import min_models
@@ -37,14 +37,14 @@ class DispatchRecordModel(UpdatableModel):
     __entity_name__ = "dispatch-records"
 
     umu_id: str
-    category: DispatchCategory
+    category: str
     reference_id: str
-    dispatch_type: DispatchType
+    dispatch_type: str
     dispatch_at: int
-    service: Services
+    service: str
     status: Status
     author: min_models.UserMin
-    dispatch_details: list[min_models.DispatchRecordDetailMin]= None
+    dispatch_details: Optional[List[min_models.DispatchRecordDetailMin]] = None
     dispatch_notes: Optional[str] = None
 
     def __post_init__(self):

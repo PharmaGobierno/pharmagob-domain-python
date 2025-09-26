@@ -32,7 +32,7 @@ class ShipmentModel(UpdatableModel):
     order_number: str
     load_id: str
     status: Status
-    shipment_type: ShipmentType
+    shipment_type: str
     application_date: int
     user: min_models.UserMin
     order_id: Optional[str] = None

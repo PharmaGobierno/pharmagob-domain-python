@@ -8,6 +8,7 @@ from .minified import min_models
 class StatusOrigins(str, Enum):
     BLUEYONDER = "BLUEYONDER"
     NOT_SPECIFIED = "NOT_SPECIFIED"
+    MANUAL = "MANUAL"
 
 
 @dataclass(kw_only=True)
@@ -18,5 +19,5 @@ class ShipmentStatusModel(BaseModel):
     shipment: min_models.ShipmentMin
     status: str
     origin_timestamp: int
-    origin: StatusOrigins
+    origin: str
     context: dict

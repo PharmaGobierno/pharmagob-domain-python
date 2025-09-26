@@ -1,4 +1,4 @@
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from time import time
 from typing import Any, Dict, Optional
 
@@ -16,7 +16,7 @@ class BasePubsubMessage:
     origin_timestamp: int
     author: min_models.UserMin
     version: str
-    published_at: int = round(time() * 1000)
+    published_at: int = field(default_factory=lambda: round(time() * 1000))
     context: Optional[dict] = None
 
     def dict(self):

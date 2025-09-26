@@ -25,7 +25,7 @@ class DispatchRecordDetailModel(UpdatableModel):
     quantity: int
     location_content: min_models.LocationContentMin
     item: min_models.ItemMin
-    administration_type: AdministrationType
+    administration_type: str
     doctor: Optional[min_models.DoctorMin] = None
     patient: Optional[min_models.PatientMin] = None
     patient_bed: Optional[str] = None
