@@ -16,7 +16,7 @@ class WarehouseModel(UpdatableModel):
 
     umu_id: str
     name: str
-    type: str  # WarehouseTypes
+    type: str  # Warehouse Types
     code: str
     description: Optional[str]
     addrress: Optional[str]
