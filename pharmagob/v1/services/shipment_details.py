@@ -14,7 +14,9 @@ class ShipmentDetailService(
     __model__ = ShipmentDetailModel
 
     def get_by_shipment_id(
-        self, shipment_id: str, *, umu_id: str
+        self, shipment_id: str, *, umu_id: str, limit: int = 100000
     ) -> Tuple[int, Iterator[ShipmentDetailModel]]:
-        count, result = self.repository.get_by_shipment_id(shipment_id, umu_id=umu_id)
+        count, result = self.repository.get_by_shipment_id(
+            shipment_id, umu_id=umu_id, limit=limit
+        )
         return count, map(lambda r: ShipmentDetailModel(**r), result)

@@ -14,9 +14,9 @@ class DispatchRecordDetailService(
     __model__ = DispatchRecordDetailModel
 
     def get_by_dispatch_record_id(
-        self, dispatch_record_id: str, *, umu_id: str
+        self, dispatch_record_id: str, *, umu_id: str, limit: int = 100000
     ) -> Tuple[int, Iterator[DispatchRecordDetailModel]]:
         count, result = self.repository.get_by_dispatch_record_id(
-            dispatch_record_id, umu_id=umu_id
+            dispatch_record_id, umu_id=umu_id, limit=limit
         )
         return count, map(lambda r: DispatchRecordDetailModel(**r), result)

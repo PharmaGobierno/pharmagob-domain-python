@@ -10,6 +10,7 @@ class DispatchRecordDetailRepositoryInterface(BaseRepositoryInterface):
         self,
         dispatch_record_id: str,
         *,
+        limit: int,
         umu_id: Optional[str] = None,
     ) -> Tuple[int, List[dict]]:
         raise NotImplementedError
