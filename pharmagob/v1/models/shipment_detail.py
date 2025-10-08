@@ -1,5 +1,5 @@
-from dataclasses import dataclass
-from typing import Optional
+from dataclasses import dataclass, field
+from typing import List, Optional
 
 from ._base import UpdatableModel, uuid_by_params
 from .minified import min_models
@@ -18,6 +18,7 @@ class ShipmentDetailModel(UpdatableModel):
     last_author: Optional[min_models.UserMin]
     brand: Optional[str] = None
     accepted_quantity: Optional[int] = None
+    location_content_ids: List[str] = field(default_factory=list)
 
     def __post_init__(self):
         super().__post_init__()
