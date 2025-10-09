@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
 
-from ._base import BaseModel
+from ._base import BaseModel, uuid_by_params
 from .minified import min_models
 
 
@@ -26,3 +26,7 @@ class AdministrativeIssueRecordModel(BaseModel):
     quantity_action_type: QuantityActionType
     origin_timestamp: int
     issue_notes: Optional[str] = None
+
+    def __post_init__(self):
+        super().__post_init__()
+        self._id = uuid_by_params(self.reference_id, self.umu_id)
