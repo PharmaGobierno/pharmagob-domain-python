@@ -104,8 +104,12 @@ class DispatchRecordDetailMin:
     dispatch_record_reference_id: str
     item_id: str
     quantity: int
-    prescribed_quantity: int
     dispatch_at: int
     location_content_id: str
     doctor_id: Optional[str] = None
     patient_id: Optional[str] = None
+    prescribed_quantity: Optional[int] = None
+
+    def __post_init__(self):
+        if self.prescribed_quantity is None:
+            self.prescribed_quantity = self.quantity
