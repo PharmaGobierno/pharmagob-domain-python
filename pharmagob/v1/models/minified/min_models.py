@@ -104,6 +104,7 @@ class DispatchRecordDetailMin:
     dispatch_record_reference_id: str
     item_id: str
     quantity: int
+    prescribed_quantity: int
     dispatch_at: int
     location_content_id: str
     doctor_id: Optional[str] = None
