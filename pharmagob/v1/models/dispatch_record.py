@@ -2,13 +2,14 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List, Optional
 
-from ._base import UpdatableModel, uuid_by_params
+from ._base import UpdatableModel
 from .minified import min_models
 
 
 class Status(str, Enum):
     DISPATCHED = "DISPATCHED"
     PARTIAL_DISPATCHED = "PARTIAL_DISPATCHED"
+    CANCELLED = "CANCELLED"
 
 
 class Services(str, Enum):
@@ -139,7 +140,3 @@ class DispatchRecordModel(UpdatableModel):
     author: min_models.UserMin
     dispatch_details: Optional[List[min_models.DispatchRecordDetailMin]] = None
     dispatch_notes: Optional[str] = None
-
-    def __post_init__(self):
-        super().__post_init__()
-        self._id = uuid_by_params(self.reference_id, self.umu_id)
