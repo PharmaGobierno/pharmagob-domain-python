@@ -12,6 +12,9 @@ class Events(str, Enum):
     DISPATCHED = "DISPATCHED"
     ISSUE_RECORD_ACCEPTED = "ISSUE_RECORD_ACCEPTED"
     ISSUE_RECORD_DISPATCHED = "ISSUE_RECORD_DISPATCHED"
+    DISPATCHED_RECORD_CANCELLED = (
+        "DISPATCHED_RECORD_CANCELLED"  # increase quantity event
+    )
 
 
 @dataclass(kw_only=True)

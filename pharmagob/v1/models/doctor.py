@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 from typing import Optional
 
@@ -150,6 +150,11 @@ class DoctorModel(UpdatableModel):
     level: Optional[str] = None
     job_position: Optional[str] = None
 
+    full_name: str = field(init=False)
+
     def __post_init__(self):
         super().__post_init__()
         self._id = uuid_by_params(self.employee_number, self.umu_id)
+        self.full_name = (
+            f"{self.name} {self.last_name_1} {self.last_name_2 or ''}".strip()
+        )
