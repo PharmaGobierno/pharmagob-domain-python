@@ -1,17 +1,8 @@
 from dataclasses import dataclass
-from enum import Enum
 from typing import Optional
 
 from ._base import UpdatableModel
 from .minified import min_models
-
-
-class AdministrationType(str, Enum):
-    ORAL = "ORAL"
-    INTRAVENOUS = "INTRAVENOUS"
-    TOPICAL = "TOPICAL"
-    INHALATION = "INHALATION"
-    SUBCUTANEOUS = "SUBCUTANEOUS"
 
 
 @dataclass(kw_only=True)
