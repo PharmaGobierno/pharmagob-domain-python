@@ -17,3 +17,16 @@ class DoctorRepositoryInterface(BaseRepositoryInterface):
         umu_id: Optional[str] = None,
     ) -> Tuple[int, List[dict]]:
         raise NotImplementedError
+
+    @abstractmethod
+    def search_by_full_name(
+        self,
+        full_name: str,
+        *,
+        page: int,
+        limit: int,
+        created_at_gt: Optional[int] = None,
+        created_at_lt: Optional[int] = None,
+        umu_id: Optional[str] = None,
+    ) -> Tuple[int, List[dict]]:
+        raise NotImplementedError
