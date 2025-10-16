@@ -94,6 +94,7 @@ class DispatchRecordMin:
     dispatch_at: int
     service: str
     category: str
+    prescribed_at: Optional[int] = None
 
 
 @dataclass
@@ -109,7 +110,4 @@ class DispatchRecordDetailMin:
     doctor_id: Optional[str] = None
     patient_id: Optional[str] = None
     prescribed_quantity: Optional[int] = None
-
-    def __post_init__(self):
-        if self.prescribed_quantity is None:
-            self.prescribed_quantity = self.quantity
+    prescribed_at: Optional[int] = None

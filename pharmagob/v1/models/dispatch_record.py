@@ -37,3 +37,4 @@ class DispatchRecordModel(UpdatableModel):
     author: min_models.UserMin
     dispatch_details: Optional[List[min_models.DispatchRecordDetailMin]] = None
     dispatch_notes: Optional[str] = None
+    prescribed_at: Optional[int] = None
