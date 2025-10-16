@@ -24,7 +24,7 @@ class PatientModel(UpdatableModel):
     country: Optional[str] = None
     street_address: Optional[str] = None
 
-    full_name: str = field(init=False)
+    full_name: str
 
     def __post_init__(self):
         super().__post_init__()
