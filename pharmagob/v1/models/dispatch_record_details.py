@@ -15,6 +15,7 @@ class DispatchRecordDetailModel(UpdatableModel):
     author: min_models.UserMin
     quantity: int
     prescribed_quantity: Optional[int] = None
+    prescribed_at: Optional[int] = None
     location_content: min_models.LocationContentMin
     item: min_models.ItemMin
     administration_type: Optional[str] = None
@@ -22,8 +23,3 @@ class DispatchRecordDetailModel(UpdatableModel):
     patient: Optional[min_models.PatientMin] = None
     patient_bed: Optional[str] = None
     notes: Optional[str] = None
-
-    def __post_init__(self):
-        super().__post_init__()
-        if self.prescribed_quantity is None:
-            self.prescribed_quantity = self.quantity
