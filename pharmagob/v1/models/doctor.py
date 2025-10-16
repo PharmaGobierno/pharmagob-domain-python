@@ -26,7 +26,7 @@ class DoctorModel(UpdatableModel):
     level: Optional[str] = None
     job_position: Optional[str] = None
 
-    full_name: str = field(init=False)
+    full_name: str
 
     def __post_init__(self):
         super().__post_init__()
