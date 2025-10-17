@@ -15,9 +15,9 @@ class DoctorMin:
     umu_id: str
     name: str
     last_name_1: str
-    last_name_2: Optional[str]
     employee_number: str
     profesional_licence: str
+    last_name_2: Optional[str] = None
 
 
 @dataclass
@@ -26,10 +26,10 @@ class PatientMin:
     umu_id: str
     name: str
     last_name_1: str
-    last_name_2: Optional[str]
     curp: str
     birth: int
-    email: Optional[str]
+    email: Optional[str] = None
+    last_name_2: Optional[str] = None
 
 
 @dataclass
@@ -71,7 +71,7 @@ class ItemMin:
 class LocationMin:
     id: str
     umu_id: str
-    label_code: Optional[str]
+    label_code: Optional[str] = None
 
 
 @dataclass
