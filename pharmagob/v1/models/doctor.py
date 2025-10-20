@@ -28,9 +28,15 @@ class DoctorModel(UpdatableModel):
 
     full_name: str
 
+    def builder_full_name(self) -> str:
+        return " ".join(filter(None, [self.name, self.last_name_1, self.last_name_2]))
+
+    def update(self, data: dict):
+        super().update(data)
+        if data.get("name") or data.get("last_name_1") or data.get("last_name_2"):
+            self.full_name = self.builder_full_name()
+
     def __post_init__(self):
         super().__post_init__()
         self._id = uuid_by_params(self.employee_number, self.umu_id)
-        self.full_name = (
-            f"{self.name} {self.last_name_1} {self.last_name_2 or ''}".strip()
-        )
+        self.full_name = self.builder_full_name()
