@@ -24,7 +24,7 @@ class PatientModel(UpdatableModel):
     country: Optional[str] = None
     street_address: Optional[str] = None
 
-    full_name: str
+    full_name: Optional[str] = None
 
     def builder_full_name(self) -> str:
         return " ".join(filter(None, [self.name, self.last_name_1, self.last_name_2]))
