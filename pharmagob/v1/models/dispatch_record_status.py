@@ -11,6 +11,7 @@ class DispatchRecordStatusModel(BaseModel):
 
     umu_id: str
     author: min_models.UserMin
+    status: str
     dispatch_record: min_models.DispatchRecordMin
     origin_timestamp: int
     context: Optional[dict] = None
