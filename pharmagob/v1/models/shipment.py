@@ -22,6 +22,7 @@ class ShipmentType(str, Enum):
     STANDARD = "STANDARD"  # ordinary
     LIFE_SUPPORT = "LIFE_SUPPORT"
     EXTRAORDINARY = "EXTRAORDINARY"
+    ISEMEMB = "ISEMEMB"
 
 
 @dataclass(kw_only=True)
