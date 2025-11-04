@@ -8,6 +8,7 @@ from pharmagob.v1.models.location_content import LocationContentModel
 from pharmagob.v1.models.minified import min_models
 from pharmagob.v1.models.shipment import ShipmentModel
 from pharmagob.v1.models.shipment_detail import ShipmentDetailModel
+from pharmagob.v1.models.stock_transfer import StockTransferModel
 
 
 @dataclass
@@ -120,3 +121,18 @@ class DispatchRecordDetailsPubsubMessage(BasePubsubMessage):
     def get_attributes(self) -> Dict[str, str]:
         default_attributes = super().get_attributes()
         return default_attributes
+
+
+@dataclass(kw_only=True)
+class StockTransferEventsPubsubMessage(BasePubsubMessage):
+    payload: StockTransferModel
+    event: str
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "pharmagob-stock-transfer-events"
+
+    def get_attributes(self) -> Dict[str, str]:
+        default_attributes = super().get_attributes()
+        return {**default_attributes, "event": self.event}
