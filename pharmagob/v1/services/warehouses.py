@@ -16,13 +16,19 @@ class WarehouseService(BaseService[WarehouseModel, WarehouseRepositoryInterface]
         page: int,
         limit: int,
         type: Optional[str] = None,
-        disable: Optional[bool] = None
+        disable: Optional[bool] = None,
+        created_at_gt: Optional[int] = None,
+        created_at_lt: Optional[int] = None,
+        sort_order: int = -1,
     ) -> Tuple[int, Iterator[WarehouseModel]]:
         count, result = self.repository.search_by_umu(
             search_str,
-            type=type,
-            disable=disable,
             page=page,
             limit=limit,
+            type=type,
+            disable=disable,
+            created_at_gt=created_at_gt,
+            created_at_lt=created_at_lt,
+            sort_order=sort_order,
         )
         return count, map(lambda r: WarehouseModel(**r), result)
