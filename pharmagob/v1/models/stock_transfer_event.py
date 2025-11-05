@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Optional
 
-from ._base import EventfulModel
+from ._base import EventfulModel, uuid_by_params
 from .minified import min_models
 
 
@@ -34,3 +34,7 @@ class StockTransferEventModel(EventfulModel[Events]):
     context: StockTransferEventContext = field(
         default_factory=StockTransferEventContext
     )
+
+    def __post_init__(self):
+        super().__post_init__()
+        self._id = uuid_by_params(self.stock_transfer_id, self.transition_timestamp)

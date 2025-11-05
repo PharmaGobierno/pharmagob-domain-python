@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional
+from uuid import UUID
 
 from ._base import UpdatableModel
 from .minified import min_models
@@ -11,7 +12,6 @@ class StockTransferModel(UpdatableModel):
     __entity_name__ = "stock-transfers"
 
     umu_id: str
-    category: str
     reference_id: str = ""
     last_event: Events
     last_event_timestamp: int
@@ -22,3 +22,17 @@ class StockTransferModel(UpdatableModel):
     dispatched_quantity: Optional[int] = None
     accepted_quantity: Optional[int] = None
     context: Optional[dict] = None
+
+    @classmethod
+    def generate_reference_id(cls, uuid_str: str) -> str:
+        """
+        e.g. ST-550e8400e29b41d4a716446655440000
+        """
+        # UUID validation
+        u = UUID(uuid_str)
+        return f"ST-{u.hex}"
+
+    def __post_init__(self):
+        super().__post_init__()
+        if self.reference_id == "":
+            self.reference_id = self.generate_reference_id(self._id)
