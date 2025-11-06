@@ -12,6 +12,7 @@ class LocationContentRepositoryInterface(BaseRepositoryInterface):
         *,
         page: int,
         limit: int,
+        sort: Optional[List[Tuple[str, int]]] = None,
         umu_id: Optional[str] = None,
         expiration_date_gt: Optional[int] = None,
         expiration_date_lt: Optional[int] = None,
