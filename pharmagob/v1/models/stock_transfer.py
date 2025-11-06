@@ -15,10 +15,9 @@ class StockTransferModel(UpdatableModel):
     reference_id: str = ""
     last_event: Events
     last_event_timestamp: int
-    last_author: min_models.UserMin
+    last_event_author: min_models.UserMin
     requested_quantity: int
     foreign_location_content: min_models.LocationContentMin
-    foreign_dispatcher_author: Optional[min_models.UserMin] = None
     dispatched_quantity: Optional[int] = None
     accepted_quantity: Optional[int] = None
     context: Optional[dict] = None
@@ -26,11 +25,11 @@ class StockTransferModel(UpdatableModel):
     @classmethod
     def generate_reference_id(cls, uuid_str: str) -> str:
         """
-        e.g. ST-550e8400e29b41d4a716446655440000
+        e.g. 550e8400e29b41d4a716446655440000
         """
         # UUID validation
         u = UUID(uuid_str)
-        return f"ST-{u.hex}"
+        return f"{u.hex}"
 
     def __post_init__(self):
         super().__post_init__()
