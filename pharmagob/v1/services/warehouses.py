@@ -1,4 +1,4 @@
-from typing import Iterator, Optional, Tuple
+from typing import Dict, Iterator, Optional, Tuple
 
 from pharmagob.v1.models.warehouse import WarehouseModel
 from pharmagob.v1.repository_interfaces.warehouses import WarehouseRepositoryInterface
@@ -19,7 +19,7 @@ class WarehouseService(BaseService[WarehouseModel, WarehouseRepositoryInterface]
         disable: Optional[bool] = None,
         created_at_gt: Optional[int] = None,
         created_at_lt: Optional[int] = None,
-        sort_order: int = -1,
+        sort: Optional[Dict[str, int]] = None,
     ) -> Tuple[int, Iterator[WarehouseModel]]:
         count, result = self.repository.search_by_umu(
             search_str,
@@ -29,6 +29,6 @@ class WarehouseService(BaseService[WarehouseModel, WarehouseRepositoryInterface]
             disable=disable,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
-            sort_order=sort_order,
+            sort=sort,
         )
         return count, map(lambda r: WarehouseModel(**r), result)

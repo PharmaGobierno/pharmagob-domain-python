@@ -1,4 +1,4 @@
-from typing import Iterator, List, Optional, Tuple
+from typing import Dict, Iterator, List, Optional, Tuple
 
 from pharmagob.v1.models.location_content import LocationContentModel
 from pharmagob.v1.repository_interfaces.location_contents import (
@@ -20,7 +20,7 @@ class LocationContentService(
         umu_id: str,
         page: int,
         limit: int,
-        sort: Optional[List[Tuple[str, int]]] = None,
+        sort: Optional[Dict[str, int]] = None,
         quantity_gt: Optional[int] = None,
         quantity_lt: Optional[int] = None,
         expiration_date_gt: Optional[int] = None,
