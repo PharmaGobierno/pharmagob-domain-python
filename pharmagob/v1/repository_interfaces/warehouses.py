@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 from ._base import BaseRepositoryInterface
 
@@ -16,6 +16,6 @@ class WarehouseRepositoryInterface(BaseRepositoryInterface):
         disable: Optional[bool] = None,
         created_at_gt: Optional[int] = None,
         created_at_lt: Optional[int] = None,
-        sort_order: int = -1,
+        sort: Optional[Dict[str, int]] = None,
     ) -> Tuple[int, List[dict]]:
         raise NotImplementedError
