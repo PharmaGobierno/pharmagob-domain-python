@@ -15,6 +15,8 @@ class Events(str, Enum):
     DISPATCHED_RECORD_CANCELLED = (
         "DISPATCHED_RECORD_CANCELLED"  # increase quantity event
     )
+    STOCK_TRANSFER_DISPATCHED = "STOCK_TRANSFER_DISPATCHED"
+    STOCK_TRANSFER_ACCEPTED = "STOCK_TRANSFER_ACCEPTED"
 
 
 @dataclass(kw_only=True)
