@@ -19,5 +19,5 @@ class WarehouseModel(UpdatableModel):
     type: str
     code: str
     description: Optional[str]
-    addrress: Optional[str]
+    address: Optional[str]
     disabled: bool = False
