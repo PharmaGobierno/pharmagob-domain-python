@@ -26,7 +26,6 @@ class StockTransferEventModel(EventfulModel[Events]):
     __entity_name__ = "stock-transfer-events"
 
     umu_id: str
-    category: str
     stock_transfer_id: str
     stock_transfer_reference_id: str
     author: min_models.UserMin
