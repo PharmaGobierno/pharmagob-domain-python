@@ -127,6 +127,7 @@ class DispatchRecordDetailsPubsubMessage(BasePubsubMessage):
 class StockTransferEventsPubsubMessage(BasePubsubMessage):
     payload: StockTransferModel
     event: str
+    quantity: int
     version: str = "1"
 
     @classmethod

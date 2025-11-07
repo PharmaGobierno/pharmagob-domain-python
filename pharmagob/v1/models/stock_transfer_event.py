@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
 
@@ -14,25 +14,16 @@ class Events(str, Enum):
 
 
 @dataclass(kw_only=True)
-class StockTransferEventContext:
-    requested_quantity: Optional[int] = None
-    accepted_quantity: Optional[int] = None
-    dispatched_quantity: Optional[int] = None
-    notes: Optional[str] = None
-
-
-@dataclass(kw_only=True)
 class StockTransferEventModel(EventfulModel[Events]):
     __entity_name__ = "stock-transfer-events"
 
     umu_id: str
     stock_transfer_id: str
     stock_transfer_reference_id: str
+    quantity: int
     author: min_models.UserMin
     foreign_location_content: min_models.LocationContentMin
-    context: StockTransferEventContext = field(
-        default_factory=StockTransferEventContext
-    )
+    context: Optional[dict] = None
 
     def __post_init__(self):
         super().__post_init__()

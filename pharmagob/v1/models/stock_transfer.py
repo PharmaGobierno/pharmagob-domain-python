@@ -16,10 +16,10 @@ class StockTransferModel(UpdatableModel):
     last_event: Events
     last_event_timestamp: int
     last_event_author: min_models.UserMin
-    requested_quantity: int
     foreign_location_content: min_models.LocationContentMin
+    created_quantity: int
     dispatched_quantity: Optional[int] = None
-    accepted_quantity: Optional[int] = None
+    received_quantity: Optional[int] = None
     context: Optional[dict] = None
 
     @classmethod
