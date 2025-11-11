@@ -23,6 +23,7 @@ class StockTransferEventModel(EventfulModel[Events]):
     quantity: int
     author: min_models.UserMin
     foreign_location_content: min_models.LocationContentMin
+    location_content: Optional[min_models.LocationContentMin] = None
     context: Optional[dict] = None
 
     def __post_init__(self):

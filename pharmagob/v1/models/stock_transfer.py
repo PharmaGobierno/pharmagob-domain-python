@@ -20,6 +20,7 @@ class StockTransferModel(UpdatableModel):
     created_quantity: int
     dispatched_quantity: Optional[int] = None
     received_quantity: Optional[int] = None
+    location_content: Optional[min_models.LocationContentMin] = None
     context: Optional[dict] = None
 
     @classmethod
