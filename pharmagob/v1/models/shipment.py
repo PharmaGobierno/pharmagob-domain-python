@@ -23,6 +23,11 @@ class ShipmentType(str, Enum):
     LIFE_SUPPORT = "LIFE_SUPPORT"
     EXTRAORDINARY = "EXTRAORDINARY"
     ISEMEMB = "ISEMEMB"
+    ORD = "ORD"  # ordinary
+    RTS = "RTS"  # rutas de salud
+    SPV = "SPV"  # soporte de vida
+    URG = "URG"  # urgente
+    FARB = "FARB"  # farmacias del bienestar
 
 
 @dataclass(kw_only=True)
