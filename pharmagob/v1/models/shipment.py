@@ -18,10 +18,7 @@ class Status(str, Enum):
 
 
 class ShipmentType(str, Enum):
-    URGENT = "URGENT"
-    STANDARD = "STANDARD"  # ordinary
-    LIFE_SUPPORT = "LIFE_SUPPORT"
-    EXTRAORDINARY = "EXTRAORDINARY"
+    STANDARD = "STANDARD"  # manual
     ISEMEMB = "ISEMEMB"
     ORD = "ORD"  # ordinary
     RTS = "RTS"  # rutas de salud
