@@ -7,7 +7,6 @@ from pharmagob.v1.models.dispatch_record_details import DispatchRecordDetailMode
 from pharmagob.v1.models.location_content import LocationContentModel
 from pharmagob.v1.models.minified import min_models
 from pharmagob.v1.models.shipment import ShipmentModel
-from pharmagob.v1.models.shipment_detail import ShipmentDetailModel
 from pharmagob.v1.models.stock_transfer import StockTransferModel
 
 
@@ -32,23 +31,6 @@ class BasePubsubMessage:
 
 
 @dataclass(kw_only=True)
-class ShipmentStatusPubsubMessage(BasePubsubMessage):
-    payload: ShipmentModel
-    status: str
-    origin: str
-    items: Optional[list[dict]] = None
-    version: str = "1"
-
-    @classmethod
-    def topic(cls) -> str:
-        return "shipment-status"
-
-    def get_attributes(self) -> Dict[str, str]:
-        default_attributes = super().get_attributes()
-        return {**default_attributes, "origin": self.origin, "status": self.status}
-
-
-@dataclass(kw_only=True)
 class LocationContentEventsPubsubMessage(BasePubsubMessage):
     payload: LocationContentModel
     event: str
@@ -61,22 +43,6 @@ class LocationContentEventsPubsubMessage(BasePubsubMessage):
     def get_attributes(self) -> Dict[str, str]:
         default_attributes = super().get_attributes()
         return {**default_attributes, "event": self.event}
-
-
-@dataclass(kw_only=True)
-class ValidationShipmentDetailsPubsubMessage(BasePubsubMessage):
-    payload: ShipmentDetailModel
-    accepted_item_quantity: int
-    status: str
-    version: str = "1"
-
-    @classmethod
-    def topic(cls) -> str:
-        return "shipment-detail-validations"
-
-    def get_attributes(self) -> Dict[str, str]:
-        default_attributes = super().get_attributes()
-        return {**default_attributes, "status": self.status}
 
 
 @dataclass(kw_only=True)
@@ -137,3 +103,26 @@ class StockTransferEventsPubsubMessage(BasePubsubMessage):
     def get_attributes(self) -> Dict[str, str]:
         default_attributes = super().get_attributes()
         return {**default_attributes, "event": self.event}
+
+
+@dataclass(kw_only=True)
+class ShipmentsPubsubMessage(BasePubsubMessage):
+    payload: ShipmentModel
+    status: str
+    review_status: str
+    origin: str
+    action_type: Optional[str] = None
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "pharmagob-shipments"
+
+    def get_attributes(self) -> Dict[str, str]:
+        default_attributes = super().get_attributes()
+        return {
+            **default_attributes,
+            "status": self.status,
+            "origin": self.origin,
+            "review_status": self.review_status,
+        }
