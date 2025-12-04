@@ -10,6 +10,7 @@ class LocationRepositoryInterface(BaseRepositoryInterface):
         self,
         umu_id,
         *,
+        label_code: Optional[str] = None,
         sort: Optional[List[Tuple[str, int]]] = None,
         projection: Optional[Union[list, dict]] = None,
         limit: Optional[int] = None,
