@@ -23,3 +23,17 @@ class ShipmentDetailModel(UpdatableModel):
     def __post_init__(self):
         super().__post_init__()
         self._id = uuid_by_params(self.shipment.id, self.item.id, self.lot)
+
+    def minified(self) -> min_models.ShipmentDetailMin:
+        return min_models.ShipmentDetailMin(
+            id=self._id,
+            umu_id=self.umu_id,
+            item_id=self.item.id,
+            lot=self.lot,
+            expiration_date=self.expiration_date,
+            quantity=self.quantity,
+            shipment_id=self.shipment.id,
+            shipment_order_number=self.shipment.order_number,
+            shipment_load_id=self.shipment.load_id,
+            brand=self.brand,
+        )

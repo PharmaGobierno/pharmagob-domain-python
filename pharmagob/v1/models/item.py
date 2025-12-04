@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 from ._base import UpdatableModel
+from .minified.min_models import ItemMin
 
 
 @dataclass(kw_only=True)
@@ -20,3 +21,14 @@ class ItemModel(UpdatableModel):
     is_packing: Optional[bool] = None
     pieces_package: Optional[int] = None
     unit_price: Optional[float] = None
+
+    def minified(self) -> ItemMin:
+        return ItemMin(
+            id=self._id,
+            foreign_id=self.foreign_id,
+            description=self.description,
+            is_controlled=self.is_controlled,
+            category=self.category,
+            sub_category=self.sub_category,
+            short_description=self.short_description,
+        )
