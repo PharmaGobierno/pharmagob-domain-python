@@ -12,11 +12,6 @@ class Status(str, Enum):
     CANCELLED = "CANCELLED"
 
 
-class DispatchType(str, Enum):
-    INHOSPITAL_DISPENSING = "INHOSPITAL_DISPENSING"
-    PRESCRIPTION = "PRESCRIPTION"
-
-
 class DispatchCategory(str, Enum):
     MEDICATION = "MEDICATION"
     MEDICAL_SUPPLIES = "MEDICAL_SUPPLIES"
@@ -38,3 +33,15 @@ class DispatchRecordModel(UpdatableModel):
     dispatch_details: Optional[List[min_models.DispatchRecordDetailMin]] = None
     dispatch_notes: Optional[str] = None
     prescribed_at: Optional[int] = None
+
+    def minified(self) -> min_models.DispatchRecordMin:
+        return min_models.DispatchRecordMin(
+            id=self._id,
+            umu_id=self.umu_id,
+            reference_id=self.reference_id,
+            dispatch_type=self.dispatch_type,
+            dispatch_at=self.dispatch_at,
+            service=self.service,
+            category=self.category,
+            prescribed_at=self.prescribed_at,
+        )

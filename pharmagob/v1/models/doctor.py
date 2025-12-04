@@ -3,6 +3,7 @@ from enum import Enum
 from typing import Optional
 
 from ._base import UpdatableModel, uuid_by_params
+from .minified.min_models import DoctorMin
 
 
 class Status(str, Enum):
@@ -40,3 +41,14 @@ class DoctorModel(UpdatableModel):
         super().__post_init__()
         self._id = uuid_by_params(self.employee_number, self.umu_id)
         self.full_name = self.builder_full_name()
+
+    def minified(self) -> DoctorMin:
+        return DoctorMin(
+            id=self._id,
+            umu_id=self.umu_id,
+            name=self.name,
+            last_name_1=self.last_name_1,
+            employee_number=self.employee_number,
+            profesional_licence=self.profesional_licence,
+            last_name_2=self.last_name_2,
+        )

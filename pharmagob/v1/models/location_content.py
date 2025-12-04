@@ -21,3 +21,14 @@ class LocationContentModel(UpdatableModel):
     def __post_init__(self):
         super().__post_init__()
         self._id = uuid_by_params(self.item.id, self.lot, self.location.id)
+
+    def minified(self) -> min_models.LocationContentMin:
+        return min_models.LocationContentMin(
+            id=self._id,
+            umu_id=self.umu_id,
+            item_id=self.item.id,
+            lot=self.lot,
+            expiration_date=self.expiration_date,
+            location_id=self.location.id,
+            quantity=self.quantity,
+        )
