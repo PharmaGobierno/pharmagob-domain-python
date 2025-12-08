@@ -19,6 +19,8 @@ class LocationContentRepositoryInterface(BaseRepositoryInterface):
         quantity_gt: Optional[int] = None,
         quantity_lt: Optional[int] = None,
         lot: Optional[str] = None,
+        location_id: Optional[str] = None,
+        location_label_code: Optional[str] = None
     ) -> Tuple[int, List[dict]]:
         raise NotImplementedError
 
@@ -37,5 +39,7 @@ class LocationContentRepositoryInterface(BaseRepositoryInterface):
         quantity_gt: Optional[int] = None,
         quantity_lt: Optional[int] = None,
         lot: Optional[str] = None,
+        location_id: Optional[str] = None,
+        location_label_code: Optional[str] = None
     ) -> Tuple[int, List[dict]]:
         raise NotImplementedError
