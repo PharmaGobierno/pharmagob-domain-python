@@ -1,13 +1,8 @@
 from dataclasses import dataclass
 from enum import Enum
+from typing import Optional
 
 from ._base import BaseModel
-
-
-class StatusOrigins(str, Enum):
-    BLUEYONDER = "BLUEYONDER"
-    NOT_SPECIFIED = "NOT_SPECIFIED"
-    MANUAL = "MANUAL"
 
 
 @dataclass(kw_only=True)
@@ -18,4 +13,11 @@ class ShipmentLogModel(BaseModel):
     shipment: dict
     origin_timestamp: int
     origin: str
-    context: dict
+    context: Optional[dict] = None
+
+
+# TODO: DEPRECATE
+class StatusOrigins(str, Enum):
+    BLUEYONDER = "BLUEYONDER"
+    NOT_SPECIFIED = "NOT_SPECIFIED"
+    MANUAL = "MANUAL"

@@ -25,7 +25,9 @@ class LocationContentService(
         quantity_lt: Optional[int] = None,
         expiration_date_gt: Optional[int] = None,
         expiration_date_lt: Optional[int] = None,
-        lot: Optional[str] = None
+        lot: Optional[str] = None,
+        location_id: Optional[str] = None,
+        location_label_code: Optional[str] = None
     ) -> Tuple[int, Iterator[LocationContentModel]]:
         count, result = self.repository.search_by_item(
             search_str,
@@ -35,6 +37,8 @@ class LocationContentService(
             quantity_gt=quantity_gt,
             quantity_lt=quantity_lt,
             lot=lot,
+            location_id=location_id,
+            location_label_code=location_label_code,
             page=page,
             limit=limit,
             sort=sort,
@@ -54,7 +58,9 @@ class LocationContentService(
         quantity_lt: Optional[int] = None,
         expiration_date_gt: Optional[int] = None,
         expiration_date_lt: Optional[int] = None,
-        lot: Optional[str] = None
+        lot: Optional[str] = None,
+        location_id: Optional[str] = None,
+        location_label_code: Optional[str] = None
     ) -> Tuple[int, Iterator[LocationContentModel]]:
         count, result = self.repository.search_by_item_global(
             search_str,
@@ -65,6 +71,8 @@ class LocationContentService(
             quantity_gt=quantity_gt,
             quantity_lt=quantity_lt,
             lot=lot,
+            location_id=location_id,
+            location_label_code=location_label_code,
             page=page,
             limit=limit,
             sort=sort,
