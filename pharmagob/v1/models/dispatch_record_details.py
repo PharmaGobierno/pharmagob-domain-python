@@ -39,4 +39,5 @@ class DispatchRecordDetailModel(UpdatableModel):
             patient_id=self.patient.id if self.patient else None,
             prescribed_quantity=self.prescribed_quantity,
             prescribed_at=self.prescribed_at,
+            context=self.context,
         )
