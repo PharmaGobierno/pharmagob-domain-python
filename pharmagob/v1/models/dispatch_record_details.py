@@ -23,6 +23,7 @@ class DispatchRecordDetailModel(UpdatableModel):
     patient: Optional[min_models.PatientMin] = None
     patient_bed: Optional[str] = None
     notes: Optional[str] = None
+    context: Optional[dict] = None
 
     def minified(self) -> min_models.DispatchRecordDetailMin:
         return min_models.DispatchRecordDetailMin(
