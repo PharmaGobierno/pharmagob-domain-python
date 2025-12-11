@@ -111,3 +111,4 @@ class DispatchRecordDetailMin:
     patient_id: Optional[str] = None
     prescribed_quantity: Optional[int] = None
     prescribed_at: Optional[int] = None
+    context: Optional[dict] = None
