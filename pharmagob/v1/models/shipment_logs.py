@@ -3,6 +3,7 @@ from enum import Enum
 from typing import Optional
 
 from ._base import BaseModel
+from .minified import min_models
 
 
 @dataclass(kw_only=True)
@@ -13,6 +14,7 @@ class ShipmentLogModel(BaseModel):
     shipment: dict
     origin_timestamp: int
     origin: str
+    author: Optional[min_models.UserMin] = None
     context: Optional[dict] = None
 
 
