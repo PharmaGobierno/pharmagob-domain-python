@@ -15,8 +15,8 @@ class PatientModel(UpdatableModel):
     last_name_2: Optional[str] = None
     curp: str
     is_real_curp: bool = True
-    phone_number: str
-    email: Optional[str]
+    phone_number: Optional[str] = None
+    email: Optional[str] = None
     birth: int
     postal_code: Optional[str] = None
     state: Optional[str] = None
