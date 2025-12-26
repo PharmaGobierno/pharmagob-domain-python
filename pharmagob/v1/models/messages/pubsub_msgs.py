@@ -4,6 +4,7 @@ from typing import Any, Dict, Optional
 
 from pharmagob.v1.models.dispatch_record import DispatchRecordModel
 from pharmagob.v1.models.dispatch_record_details import DispatchRecordDetailModel
+from pharmagob.v1.models.item import ItemModel
 from pharmagob.v1.models.location_content import LocationContentModel
 from pharmagob.v1.models.minified import min_models
 from pharmagob.v1.models.shipment import ShipmentModel
@@ -125,4 +126,24 @@ class ShipmentsPubsubMessage(BasePubsubMessage):
             "status": self.status,
             "origin": self.origin,
             "review_status": self.review_status,
+        }
+
+
+@dataclass(kw_only=True)
+class ItemsPubsubMessage(BasePubsubMessage):
+    payload: ItemModel
+    origin: str
+    action_type: str
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "pharmagob-items"
+
+    def get_attributes(self) -> Dict[str, str]:
+        default_attributes = super().get_attributes()
+        return {
+            **default_attributes,
+            "origin": self.origin,
+            "action_type": self.action_type,
         }
