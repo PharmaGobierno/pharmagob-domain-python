@@ -4,6 +4,8 @@ from typing import Optional
 from ._base import UpdatableModel
 from .minified.min_models import ItemMin
 
+SHORT_DESCRIPTION_LENGTH = 50
+
 
 @dataclass(kw_only=True)
 class ItemModel(UpdatableModel):
@@ -15,12 +17,19 @@ class ItemModel(UpdatableModel):
     sub_category: str
     clasification: str
     description: str
-    short_description: str
     disabled: bool = False
+    short_description: Optional[str] = None
     controller_group: Optional[str] = None
     is_packing: Optional[bool] = None
     pieces_package: Optional[int] = None
     unit_price: Optional[float] = None
+
+    def __builder_short_description(self) -> str:
+        return self.description[:SHORT_DESCRIPTION_LENGTH].strip()
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.full_name = self.__builder_short_description()
 
     def minified(self) -> ItemMin:
         return ItemMin(
