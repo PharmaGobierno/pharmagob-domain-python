@@ -4,7 +4,7 @@ from typing import Optional
 from ._base import UpdatableModel
 from .minified.min_models import ItemMin
 
-SHORT_DESCRIPTION_LENGTH = 200
+SHORT_DESCRIPTION_LENGTH = 250
 
 
 @dataclass(kw_only=True)
