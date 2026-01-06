@@ -4,7 +4,7 @@ from typing import Optional
 from ._base import UpdatableModel
 from .minified.min_models import ItemMin
 
-SHORT_DESCRIPTION_LENGTH = 50
+SHORT_DESCRIPTION_LENGTH = 250
 
 
 @dataclass(kw_only=True)
@@ -29,7 +29,8 @@ class ItemModel(UpdatableModel):
 
     def __post_init__(self):
         super().__post_init__()
-        self.full_name = self.__builder_short_description()
+        if self.short_description is None:
+            self.short_description = self.__builder_short_description()
 
     def minified(self) -> ItemMin:
         return ItemMin(
