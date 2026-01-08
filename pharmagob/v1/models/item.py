@@ -46,7 +46,6 @@ class ItemModel(UpdatableModel):
         """override"""
         description_updated = "description" in data
         short_description_passed = "short_description" in data
-        print(short_description_passed)  # debug
         if (
             description_updated and not short_description_passed
         ) or self.short_description is AUTO_SHORT:
