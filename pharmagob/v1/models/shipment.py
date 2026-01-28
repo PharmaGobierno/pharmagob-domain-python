@@ -11,6 +11,7 @@ class ReviewStatus(str, Enum):
     REJECTED = "REJECTED"
     APPROVED = "APPROVED"
     PARTIAL_APPROVED = "PARTIAL_APPROVED"
+    IN_PROGRESS = "IN_PROGRESS"
 
 
 class Status(str, Enum):
