@@ -8,6 +8,7 @@ from pharmagob.v1.models.item import ItemModel
 from pharmagob.v1.models.location_content import LocationContentModel
 from pharmagob.v1.models.minified import min_models
 from pharmagob.v1.models.shipment import ShipmentModel
+from pharmagob.v1.models.shipment_detail import ShipmentDetailModel
 from pharmagob.v1.models.stock_transfer import StockTransferModel
 
 
@@ -127,6 +128,24 @@ class ShipmentsPubsubMessage(BasePubsubMessage):
             "origin": self.origin,
             "review_status": self.review_status,
         }
+
+@dataclass(kw_only=True)
+class locationContentCloseEvents(BasePubsubMessage):
+    payload: ShipmentDetailModel
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "location-content-close-events"
+
+    def get_attributes(self) -> Dict[str, str]:
+        default_attributes = super().get_attributes()
+        return {
+            **default_attributes,
+            "origin": self.origin,
+            "action_type": self.action_type,
+        }
+
 
 
 @dataclass(kw_only=True)
