@@ -142,8 +142,6 @@ class locationContentCloseEvents(BasePubsubMessage):
         default_attributes = super().get_attributes()
         return {
             **default_attributes,
-            "origin": self.origin,
-            "action_type": self.action_type,
         }
 
 
