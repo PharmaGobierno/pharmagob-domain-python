@@ -164,3 +164,27 @@ class ItemsPubsubMessage(BasePubsubMessage):
             "origin": self.origin,
             "action_type": self.action_type,
         }
+
+
+
+@dataclass(kw_only=True)
+class PharmagobShipmentDetiailsPubsubMessage(BasePubsubMessage):
+    payload: ShipmentModel
+    status: str
+    review_status: str
+    origin: str
+    action_type: Optional[str] = None
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "pharmagob-shipment-details"
+
+    def get_attributes(self) -> Dict[str, str]:
+        default_attributes = super().get_attributes()
+        return {
+            **default_attributes,
+            "status": self.status,
+            "origin": self.origin,
+            "review_status": self.review_status,
+        }
