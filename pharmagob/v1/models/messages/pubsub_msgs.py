@@ -10,6 +10,7 @@ from pharmagob.v1.models.minified import min_models
 from pharmagob.v1.models.shipment import ShipmentModel
 from pharmagob.v1.models.shipment_detail import ShipmentDetailModel
 from pharmagob.v1.models.stock_transfer import StockTransferModel
+from pharmagob.v1.models.reports import ReportRequestModel
 
 
 @dataclass
@@ -188,3 +189,12 @@ class PharmagobShipmentDetiailsPubsubMessage(BasePubsubMessage):
             "origin": self.origin,
             "review_status": self.review_status,
         }
+    
+@dataclass(kw_only=True)
+class GlobalReportPubsubMessage(BasePubsubMessage):
+    payload: ReportRequestModel 
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "global-report-events"
