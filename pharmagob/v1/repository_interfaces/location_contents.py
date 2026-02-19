@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Any
 
 from ._base import BaseRepositoryInterface
 
@@ -42,4 +42,12 @@ class LocationContentRepositoryInterface(BaseRepositoryInterface):
         location_id: Optional[str] = None,
         location_label_code: Optional[str] = None
     ) -> Tuple[int, List[dict]]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def trigger_report_aggregation(
+        self, 
+        report_id: str, 
+        filters: Dict[str, Any]
+    ) -> str:
         raise NotImplementedError
