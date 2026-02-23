@@ -132,7 +132,7 @@ class ShipmentsPubsubMessage(BasePubsubMessage):
 
 @dataclass(kw_only=True)
 class locationContentCloseEvents(BasePubsubMessage):
-    payload: ShipmentDetailModel
+    payload: dict
     version: str = "1"
 
     @classmethod

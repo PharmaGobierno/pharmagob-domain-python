@@ -10,7 +10,8 @@ class ShipmentDetailLogModel(BaseModel):
     __entity_name__ = "shipment-detail-logs"
 
     umu_id: str
-    shipment_detail: dict
+    shipment_id: str
+    review_status: str
     origin_timestamp: int
     origin: str
     author: Optional[min_models.UserMin] = None
