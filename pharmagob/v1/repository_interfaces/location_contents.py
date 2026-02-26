@@ -51,3 +51,9 @@ class LocationContentRepositoryInterface(BaseRepositoryInterface):
         filters: Dict[str, Any]
     ) -> str:
         raise NotImplementedError
+    
+    @abstractmethod
+    def find_by_logic_triad(
+        self, item_id: str, lot: str, location_id: str
+    ) -> Optional[dict]:
+        raise NotImplementedError
