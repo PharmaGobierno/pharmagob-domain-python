@@ -18,3 +18,7 @@ class ShipmentRepositoryInterface(BaseRepositoryInterface):
         review_status: Optional[List[str]] = None,
     ) -> Tuple[int, List[dict]]:
         raise NotImplementedError
+
+    @abstractmethod
+    def get_review_status(self, shipment_id: str) -> Optional[str]:
+        raise NotImplementedError
