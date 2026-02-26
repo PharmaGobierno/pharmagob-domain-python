@@ -8,7 +8,9 @@ from pharmagob.v1.models.item import ItemModel
 from pharmagob.v1.models.location_content import LocationContentModel
 from pharmagob.v1.models.minified import min_models
 from pharmagob.v1.models.shipment import ShipmentModel
+from pharmagob.v1.models.shipment_detail import ShipmentDetailModel
 from pharmagob.v1.models.stock_transfer import StockTransferModel
+from pharmagob.v1.models.reports import ReportRequestModel
 
 
 @dataclass
@@ -128,6 +130,22 @@ class ShipmentsPubsubMessage(BasePubsubMessage):
             "review_status": self.review_status,
         }
 
+@dataclass(kw_only=True)
+class locationContentCloseEvents(BasePubsubMessage):
+    payload: ShipmentDetailModel
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "location-content-close-events"
+
+    def get_attributes(self) -> Dict[str, str]:
+        default_attributes = super().get_attributes()
+        return {
+            **default_attributes,
+        }
+
+
 
 @dataclass(kw_only=True)
 class ItemsPubsubMessage(BasePubsubMessage):
@@ -147,3 +165,36 @@ class ItemsPubsubMessage(BasePubsubMessage):
             "origin": self.origin,
             "action_type": self.action_type,
         }
+
+
+
+@dataclass(kw_only=True)
+class PharmagobShipmentDetiailsPubsubMessage(BasePubsubMessage):
+    payload: ShipmentModel
+    status: str
+    review_status: str
+    origin: str
+    action_type: Optional[str] = None
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "pharmagob-shipment-details"
+
+    def get_attributes(self) -> Dict[str, str]:
+        default_attributes = super().get_attributes()
+        return {
+            **default_attributes,
+            "status": self.status,
+            "origin": self.origin,
+            "review_status": self.review_status,
+        }
+    
+@dataclass(kw_only=True)
+class GlobalReportPubsubMessage(BasePubsubMessage):
+    payload: ReportRequestModel 
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "global-report-events"

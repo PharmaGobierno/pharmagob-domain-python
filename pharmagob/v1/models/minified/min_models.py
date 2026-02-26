@@ -112,3 +112,11 @@ class DispatchRecordDetailMin:
     prescribed_quantity: Optional[int] = None
     prescribed_at: Optional[int] = None
     context: Optional[dict] = None
+
+@dataclass
+class ReportRequestMin:
+    id: str
+    status: str
+    report_type: str
+    progress: int
+    user_id: str
