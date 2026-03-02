@@ -11,6 +11,7 @@ from pharmagob.v1.models.shipment import ShipmentModel
 from pharmagob.v1.models.shipment_detail import ShipmentDetailModel
 from pharmagob.v1.models.stock_transfer import StockTransferModel
 from pharmagob.v1.models.reports import ReportRequestModel
+from pharmagob.v1.models.shipment import ReviewStatus
 
 
 @dataclass
@@ -198,3 +199,25 @@ class GlobalReportPubsubMessage(BasePubsubMessage):
     @classmethod
     def topic(cls) -> str:
         return "global-report-events"
+    
+
+@dataclass(kw_only=True)
+class LocationContentLogPubsubMessage(BasePubsubMessage):
+    payload: min_models.ShipmentMin
+    review_status: ReviewStatus
+    origin: str
+    origin_timestamp: int
+    action_type: str
+    version: str = "1"
+    context: Optional[dict] = None
+
+    @classmethod
+    def topic(cls) -> str:
+        return "shipment-details-logs"
+
+    def get_attributes(self) -> Dict[str, str]:
+        default_attributes = super().get_attributes()
+        return {
+            **default_attributes,
+            "review_status": self.review_status,
+        }
