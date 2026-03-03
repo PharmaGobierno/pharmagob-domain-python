@@ -202,7 +202,7 @@ class GlobalReportPubsubMessage(BasePubsubMessage):
     
 
 @dataclass(kw_only=True)
-class LocationContentLogPubsubMessage(BasePubsubMessage):
+class ShipmentDetailLogPubsubMessage(BasePubsubMessage):
     payload: min_models.ShipmentMin
     review_status: ReviewStatus
     origin: str
