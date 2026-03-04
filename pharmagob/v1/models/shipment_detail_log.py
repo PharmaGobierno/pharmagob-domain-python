@@ -13,7 +13,6 @@ class ShipmentDetailLogModel(BaseModel):
     umu_id: str
     shipment: min_models.ShipmentMin
     review_status: ReviewStatus
-    shipment_detail: dict
     origin_timestamp: int
     origin: str
     author: Optional[min_models.UserMin] = None
