@@ -8,7 +8,7 @@ from .shipment import ReviewStatus
 
 @dataclass(kw_only=True)
 class ShipmentDetailLogModel(BaseModel):
-    __entity_name__ = "shipment-detail-logs"
+    __entity_name__ = "shipment-details-logs"
 
     umu_id: str
     shipment: min_models.ShipmentMin
