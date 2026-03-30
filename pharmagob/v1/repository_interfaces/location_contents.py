@@ -20,7 +20,8 @@ class LocationContentRepositoryInterface(BaseRepositoryInterface):
         quantity_lt: Optional[int] = None,
         lot: Optional[str] = None,
         location_id: Optional[str] = None,
-        location_label_code: Optional[str] = None
+        location_label_code: Optional[str] = None,
+        location_label_code_not_in: Optional[List[str]] = None
     ) -> Tuple[int, List[dict]]:
         raise NotImplementedError
 
@@ -46,12 +47,10 @@ class LocationContentRepositoryInterface(BaseRepositoryInterface):
 
     @abstractmethod
     def trigger_report_aggregation(
-        self, 
-        report_id: str, 
-        filters: Dict[str, Any]
+        self, report_id: str, filters: Dict[str, Any]
     ) -> str:
         raise NotImplementedError
-    
+
     @abstractmethod
     def find_by_logic_triad(
         self, item_id: str, lot: str, location_id: str

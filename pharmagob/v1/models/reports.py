@@ -1,8 +1,9 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from typing import Any, Dict, Optional
 from ._base import UpdatableModel
 from .minified import min_models
+
 
 @dataclass(kw_only=True)
 class ReportRequestModel(UpdatableModel):
@@ -22,5 +23,5 @@ class ReportRequestModel(UpdatableModel):
             status=self.status,
             report_type=self.report_type,
             progress=self.progress,
-            user_id=self.author.id
+            user_id=self.author.id,
         )
