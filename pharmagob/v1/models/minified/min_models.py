@@ -83,6 +83,8 @@ class LocationContentMin:
     expiration_date: int
     location_id: str
     quantity: int
+    label_code: Optional[str] = None
+
 
 
 @dataclass
