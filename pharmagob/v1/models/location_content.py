@@ -4,7 +4,6 @@ from typing import List, Optional
 from ._base import UpdatableModel, uuid_by_params
 from .minified import min_models
 
-
 @dataclass(kw_only=True)
 class LocationContentModel(UpdatableModel):
     __entity_name__ = "location-contents"
@@ -20,7 +19,7 @@ class LocationContentModel(UpdatableModel):
 
     def __post_init__(self):
         super().__post_init__()
-        self._id = uuid_by_params(self.item.id, self.lot, self.location.id)
+        self._id = uuid_by_params(self.item.id, self.lot, self.location.id, self.location.label_code)
 
     def minified(self) -> min_models.LocationContentMin:
         return min_models.LocationContentMin(
