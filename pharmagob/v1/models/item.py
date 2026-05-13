@@ -28,7 +28,7 @@ class ItemModel(UpdatableModel):
     description: str
     disabled: bool = False
     short_description: Union[str, _AutoShortDescription] = AUTO_SHORT
-    controller_group: Optional[str] = None
+    controlled_group: Optional[str] = None
     is_packing: Optional[bool] = None
     pieces_package: Optional[int] = None
     unit_price: Optional[float] = None
