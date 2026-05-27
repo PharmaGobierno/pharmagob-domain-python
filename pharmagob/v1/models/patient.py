@@ -15,8 +15,8 @@ class PatientModel(UpdatableModel):
     last_name_2: Optional[str] = None
     curp: str
     is_real_curp: bool = True
-    phone_number: Optional[str] = None
-    email: Optional[str] = None
+    phone_number: str
+    email: Optional[str]
     birth: int
     postal_code: Optional[str] = None
     state: Optional[str] = None
@@ -37,7 +37,15 @@ class PatientModel(UpdatableModel):
 
     def __post_init__(self):
         super().__post_init__()
-        self._id = uuid_by_params(self.umu_id, self.curp)
+
+        existing_id = getattr(self, "id", None)
+
+        if existing_id is None:
+            self.id = uuid_by_params(
+                self.umu_id,
+                self.curp
+            )
+
         self.full_name = self.builder_full_name()
 
     def minified(self) -> PatientMin:

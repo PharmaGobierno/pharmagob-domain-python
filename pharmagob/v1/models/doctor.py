@@ -39,7 +39,13 @@ class DoctorModel(UpdatableModel):
 
     def __post_init__(self):
         super().__post_init__()
-        self._id = uuid_by_params(self.employee_number, self.umu_id)
+
+        if not getattr(self, "_id", None):
+            self._id = uuid_by_params(
+                self.employee_number,
+                self.umu_id
+            )
+
         self.full_name = self.builder_full_name()
 
     def minified(self) -> DoctorMin:
