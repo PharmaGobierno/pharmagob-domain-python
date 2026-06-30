@@ -38,3 +38,17 @@ class DispatchRecordService(
             service=service,
         )
         return count, map(lambda r: DispatchRecordModel(**r), result)
+    
+
+    def find_by_reference(
+        self,
+        reference_id: str,
+        *,
+        umu_id: str,
+    ) -> Iterator[DispatchRecordModel]:
+        result = self.repository.find_by_reference(
+            reference_id=reference_id,
+            umu_id=umu_id,
+        )
+
+        return map(lambda r: DispatchRecordModel(**r), result)

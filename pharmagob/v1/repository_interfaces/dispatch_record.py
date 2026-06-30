@@ -20,3 +20,12 @@ class DispatchRecordRepositoryInterface(BaseRepositoryInterface):
         service: Optional[str] = None,
     ) -> Tuple[int, List[dict]]:
         raise NotImplementedError
+
+    @abstractmethod
+    def find_by_reference(
+        self,
+        reference_id: str,
+        *,
+        umu_id: str,
+    ) -> List[dict]:
+        raise NotImplementedError
