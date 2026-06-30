@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Iterator, Union
 
 from ._base import BaseRepositoryInterface
 
@@ -21,11 +21,15 @@ class DispatchRecordRepositoryInterface(BaseRepositoryInterface):
     ) -> Tuple[int, List[dict]]:
         raise NotImplementedError
 
+
     @abstractmethod
     def find_by_reference(
         self,
         reference_id: str,
         *,
-        umu_id: str,
-    ) -> List[dict]:
+        umu_id: Optional[str] = None,
+        sort: Optional[List[Tuple[str, int]]] = None,
+        projection: Optional[Union[list, dict]] = None,
+        limit: Optional[int] = None,
+    ) -> Tuple[int, Iterator[dict]]:
         raise NotImplementedError

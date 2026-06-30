@@ -1,4 +1,4 @@
-from typing import Iterator, Optional, Tuple
+from typing import Iterator, Optional, Tuple, List, Union
 
 from pharmagob.v1.models.dispatch_record import DispatchRecordModel
 from pharmagob.v1.repository_interfaces.dispatch_record import (
@@ -44,11 +44,17 @@ class DispatchRecordService(
         self,
         reference_id: str,
         *,
-        umu_id: str,
-    ) -> Iterator[DispatchRecordModel]:
-        result = self.repository.find_by_reference(
+        umu_id: Optional[str] = None,
+        sort: Optional[List[Tuple[str, int]]] = None,
+        projection: Optional[Union[list, dict]] = None,
+        limit: Optional[int] = None,
+    ) -> Tuple[int, Iterator[DispatchRecordModel]]:
+        count, result = self.repository.find_by_reference(
             reference_id=reference_id,
             umu_id=umu_id,
+            sort=sort,
+            projection=projection,
+            limit=limit,
         )
 
-        return map(lambda r: DispatchRecordModel(**r), result)
+        return count, map(lambda r: DispatchRecordModel(**r), result)
