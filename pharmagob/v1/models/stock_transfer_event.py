@@ -11,6 +11,7 @@ class Events(str, Enum):
     DISPATCHED = "DISPATCHED"
     RECEIVED = "RECEIVED"
     CLOSED = "CLOSED"
+    RETURNED = "RETURNED"
 
 
 @dataclass(kw_only=True)
