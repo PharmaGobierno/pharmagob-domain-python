@@ -56,3 +56,12 @@ class LocationContentRepositoryInterface(BaseRepositoryInterface):
         self, item_id: str, lot: str, location_id: str
     ) -> Optional[dict]:
         raise NotImplementedError
+
+    
+    @abstractmethod
+    def get_by_ids(
+        self,
+        entity_ids: List[str],
+        umu_id: str,
+    ) -> List[dict]:
+        raise NotImplementedError

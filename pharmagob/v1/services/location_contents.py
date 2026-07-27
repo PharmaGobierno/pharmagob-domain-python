@@ -80,3 +80,19 @@ class LocationContentService(
             sort=sort,
         )
         return count, map(lambda r: LocationContentModel(**r), result)
+
+    def get_by_ids(
+        self,
+        entity_ids: List[str],
+        umu_id: str,
+    ) -> Iterator[LocationContentModel]:
+
+        result = self.repository.get_by_ids(
+            entity_ids=entity_ids,
+            umu_id=umu_id,
+        )
+
+        return map(
+            lambda r: LocationContentModel(**r),
+            result,
+        )
