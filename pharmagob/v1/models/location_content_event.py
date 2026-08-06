@@ -32,4 +32,4 @@ class LocationContentEventModel(EventfulModel[Events]):
 
     def __post_init__(self):
         super().__post_init__()
-        self._id = uuid_by_params(self.location_content.id, self.transition_timestamp)
+        self._id = uuid_by_params(self.location_content.id, self.transition_timestamp, Events)
