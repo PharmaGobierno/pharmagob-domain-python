@@ -29,4 +29,4 @@ class StockTransferEventModel(EventfulModel[Events]):
 
     def __post_init__(self):
         super().__post_init__()
-        self._id = uuid_by_params(self.stock_transfer_id, self.transition_timestamp, Events)
+        self._id = uuid_by_params(self.stock_transfer_id, self.transition_timestamp, self.event)
