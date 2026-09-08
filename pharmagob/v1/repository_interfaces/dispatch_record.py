@@ -33,3 +33,14 @@ class DispatchRecordRepositoryInterface(BaseRepositoryInterface):
         limit: Optional[int] = None,
     ) -> Tuple[int, Iterator[dict]]:
         raise NotImplementedError
+
+
+    @abstractmethod
+    def exists_by_reference(
+        self,
+        reference_id: str,
+        *,
+        umu_id: str,
+        exclude_statuses: Optional[List[str]] = None,
+    ) -> bool:
+        raise NotImplementedError
