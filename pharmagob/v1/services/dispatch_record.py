@@ -38,8 +38,8 @@ class DispatchRecordService(
             service=service,
         )
         return count, map(lambda r: DispatchRecordModel(**r), result)
+ 
     
-
     def find_by_reference(
         self,
         reference_id: str,
@@ -58,3 +58,17 @@ class DispatchRecordService(
         )
 
         return count, map(lambda r: DispatchRecordModel(**r), result)
+
+
+    def exists_by_reference(
+        self,
+        reference_id: str,
+        *,
+        umu_id: str,
+        exclude_statuses: Optional[List[str]] = None,
+    ) -> bool:
+        return self.repository.exists_by_reference(
+            reference_id=reference_id,
+            umu_id=umu_id,
+            exclude_statuses=exclude_statuses,
+        )
