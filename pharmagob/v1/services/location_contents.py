@@ -96,3 +96,25 @@ class LocationContentService(
             lambda r: LocationContentModel(**r),
             result,
         )
+
+    def get_batch_after(
+        self,
+        umu_id: str,
+        *,
+        after_id: Optional[str] = None,
+        limit: int = 1000,
+        location_label_code: Optional[str] = None,
+        location_label_code_not_in: Optional[List[str]] = None,
+        quantity_gt: Optional[int] = None,
+        item_ids: Optional[List[str]] = None,
+    ) -> List[LocationContentModel]:
+        result = self.repository.get_batch_after(
+            umu_id,
+            after_id=after_id,
+            limit=limit,
+            location_label_code=location_label_code,
+            location_label_code_not_in=location_label_code_not_in,
+            quantity_gt=quantity_gt,
+            item_ids=item_ids,
+        )
+        return [LocationContentModel(**r) for r in result]

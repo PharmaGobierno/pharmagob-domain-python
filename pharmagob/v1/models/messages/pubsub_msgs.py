@@ -4,6 +4,10 @@ from typing import Any, Dict, Optional
 
 from pharmagob.v1.models.dispatch_record import DispatchRecordModel
 from pharmagob.v1.models.dispatch_record_details import DispatchRecordDetailModel
+from pharmagob.v1.models.inventory_count_event import Events as InventoryCountEvents
+from pharmagob.v1.models.inventory_count_event import InventoryCountEventModel
+from pharmagob.v1.models.inventory_count_line import InventoryCountLineModel
+from pharmagob.v1.models.inventory_count_task import InventoryCountTaskModel
 from pharmagob.v1.models.item import ItemModel
 from pharmagob.v1.models.location_content import LocationContentModel
 from pharmagob.v1.models.minified import min_models
@@ -220,4 +224,99 @@ class ShipmentDetailLogPubsubMessage(BasePubsubMessage):
         return {
             **default_attributes,
             "review_status": self.review_status,
+        }
+
+
+@dataclass(kw_only=True)
+class InventoryCountTaskReleasePubsubMessage(BasePubsubMessage):
+    """Carries the whole task (umu_id, count_type, count_scope,
+    is_zero_stock_included, item_filter) so the release subscriber does not
+    read the task again. event_id is the one of the TASK_RELEASED event."""
+
+    payload: InventoryCountTaskModel
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "inventory-count-task-release"
+
+    def get_attributes(self) -> Dict[str, str]:
+        default_attributes = super().get_attributes()
+        event = InventoryCountEvents.TASK_RELEASED
+        return {
+            **default_attributes,
+            "umu_id": self.payload.umu_id,
+            "task_id": self.payload._id,
+            "event": event.value,
+            "event_id": InventoryCountEventModel.generate_event_id(
+                event, task_id=self.payload._id
+            ),
+        }
+
+
+@dataclass(kw_only=True)
+class InventoryCountEventsPubsubMessage(BasePubsubMessage):
+    """event_id is the deterministic _id of the payload, the events
+    subscriber persists it with set(write_only_if_insert=True)."""
+
+    payload: InventoryCountEventModel
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "inventory-count-events"
+
+    def get_attributes(self) -> Dict[str, str]:
+        default_attributes = super().get_attributes()
+        return {
+            **default_attributes,
+            "umu_id": self.payload.umu_id,
+            "task_id": self.payload.task.id if self.payload.task else "",
+            "event": InventoryCountEvents(self.payload.event).value,
+            "event_id": self.payload._id,
+        }
+
+
+@dataclass(kw_only=True)
+class InventoryCountAdjustmentAppliedPubsubMessage(BasePubsubMessage):
+    """Applied adjustment of a line (resolution.adjustment_quantity) to be
+    propagated to location-content-events by the adapter (H-12 option 1):
+    INVENTORY_COUNT_ACCEPTED when positive, INVENTORY_COUNT_DISPATCHED when
+    negative, context.quantity = abs(adjustment_quantity). An adjustment
+    of 0 is not published.
+
+    `location_content` is the document returned by the conditional $inc
+    (ReturnDocument.AFTER), the adapter must not read it again (H-20).
+    `transition_timestamp` (resolution.resolved_at, fixed in the
+    ADJUSTMENT -> APPLYING claim) is the origin_timestamp of the
+    location-content-event and of the kardex row, so a retry produces the
+    same _id instead of a duplicate (H-21)."""
+
+    payload: InventoryCountLineModel
+    event: str  # ADJUSTMENT_POSITIVE | ADJUSTMENT_NEGATIVE
+    location_content: Optional[LocationContentModel] = None  # state after the $inc (H-20)
+    version: str = "1"
+
+    @classmethod
+    def topic(cls) -> str:
+        return "inventory-count-adjustment-applied"
+
+    @property
+    def transition_timestamp(self) -> int:
+        """Stable timestamp of the adjustment (H-21): never now()."""
+        if self.payload.resolution is None:
+            raise ValueError("an applied adjustment requires payload.resolution")
+        return self.payload.resolution.resolved_at
+
+    def get_attributes(self) -> Dict[str, str]:
+        default_attributes = super().get_attributes()
+        event = InventoryCountEvents(self.event)
+        return {
+            **default_attributes,
+            "umu_id": self.payload.umu_id,
+            "task_id": self.payload.task.id,
+            "event": event.value,
+            "event_id": InventoryCountEventModel.generate_event_id(
+                event, line_id=self.payload._id
+            ),
         }
