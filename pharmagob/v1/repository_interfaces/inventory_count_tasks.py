@@ -1,10 +1,46 @@
 from abc import abstractmethod
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 from ._base import BaseRepositoryInterface
 
 
 class InventoryCountTaskRepositoryInterface(BaseRepositoryInterface):
+    @abstractmethod
+    def search_by_task_name(
+        self,
+        search_str: str,
+        *,
+        page: Optional[int] = None,
+        limit: Optional[int] = None,
+        sort: Optional[Dict[str, int]] = None,
+        umu_id: Optional[str] = None,
+        count_type: Optional[str] = None,
+        status: Optional[List[str]] = None,
+        cyclic_mode: Optional[str] = None,
+        scheduled_at_gt: Optional[int] = None,
+        scheduled_at_lt: Optional[int] = None,
+    ) -> Tuple[int, List[dict]]:
+        """Partial match, case and accent insensitive."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def search_by_reference_id(
+        self,
+        search_str: str,
+        *,
+        page: Optional[int] = None,
+        limit: Optional[int] = None,
+        sort: Optional[Dict[str, int]] = None,
+        umu_id: Optional[str] = None,
+        count_type: Optional[str] = None,
+        status: Optional[List[str]] = None,
+        cyclic_mode: Optional[str] = None,
+        scheduled_at_gt: Optional[int] = None,
+        scheduled_at_lt: Optional[int] = None,
+    ) -> Tuple[int, List[dict]]:
+        """Exact match of the folio."""
+        raise NotImplementedError
+
     @abstractmethod
     def claim(
         self,

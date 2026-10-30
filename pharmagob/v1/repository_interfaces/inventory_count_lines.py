@@ -1,10 +1,32 @@
 from abc import abstractmethod
-from typing import Any, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 from ._base import BaseRepositoryInterface
 
 
 class InventoryCountLineRepositoryInterface(BaseRepositoryInterface):
+    @abstractmethod
+    def search_by_item(
+        self,
+        search_str: str,
+        *,
+        page: Optional[int] = None,
+        limit: Optional[int] = None,
+        sort: Optional[Dict[str, int]] = None,
+        umu_id: Optional[str] = None,
+        task_id: Optional[str] = None,
+        status: Optional[List[str]] = None,
+        lot: Optional[str] = None,
+        is_in_system: Optional[bool] = None,
+        adjustment_sign: Optional[str] = None,
+        resolution_type: Optional[str] = None,
+        resolution_origin: Optional[str] = None,
+        resolved_at_gt: Optional[int] = None,
+        resolved_at_lt: Optional[int] = None,
+    ) -> Tuple[int, List[dict]]:
+        """Search by item key (item.id / item.foreign_id)."""
+        raise NotImplementedError
+
     @abstractmethod
     def claim(
         self,
