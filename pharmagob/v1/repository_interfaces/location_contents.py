@@ -81,3 +81,36 @@ class LocationContentRepositoryInterface(BaseRepositoryInterface):
         documents with _id > `after_id`. Used by the inventory count line
         creation instead of skip/limit pagination."""
         raise NotImplementedError
+
+    @abstractmethod
+    def increment_quantity(
+        self,
+        location_content_id: str,
+        delta: int,
+        *,
+        last_author: dict,
+        updated_at: int,
+        min_quantity: Optional[int] = None,
+        umu_id: Optional[str] = None,
+    ) -> Optional[dict]:
+        """Atomic `$inc` of quantity (find_one_and_update). Returns the
+        document AFTER the change, or None when nothing matched (it does not
+        exist, belongs to another UMU, or has less than `min_quantity`).
+        A decrement requires `min_quantity >= abs(delta)` so stock never goes
+        negative; otherwise it raises ValueError."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def upsert_increment_quantity(
+        self,
+        location_content_id: str,
+        delta: int,
+        *,
+        insert_data: dict,
+        last_author: dict,
+        updated_at: int,
+    ) -> dict:
+        """Creates the location content with quantity = `delta` (the rest of
+        `insert_data` is written only on insert) or adds `delta` to the
+        existing one. `delta` must be > 0. Returns the document AFTER."""
+        raise NotImplementedError

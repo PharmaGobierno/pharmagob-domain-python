@@ -32,6 +32,13 @@ class BaseRepositoryInterface(metaclass=ABCMeta):
         raise NotImplementedError
 
     @abstractmethod
+    def update_if(self, entity_id, *, expected: dict, data: dict) -> int:
+        """`$set` `data` only if the document still matches `expected` (a
+        plain filter merged with the _id). Returns 1 when this call won the
+        transition and 0 when it did not exist or already moved on."""
+        raise NotImplementedError
+
+    @abstractmethod
     def set(self, entity_id, *, data: dict, write_only_if_insert: bool = False) -> int:
         raise NotImplementedError
 

@@ -21,6 +21,11 @@ class BaseService(Generic[ModelT, RepositoryInterfaceT]):
         data = entity.dict()
         return self.repository.update(entity_id, data=data)
 
+    def update_if(self, entity_id, *, expected: dict, data: dict) -> int:
+        """Conditional update: 1 when this call won the transition, 0 when the
+        entity does not exist or no longer matches `expected`."""
+        return self.repository.update_if(entity_id, expected=expected, data=data)
+
     def update_many(self, and_conditions: Optional[List[tuple]], *, data: dict) -> int:
         return self.repository.update_many(and_conditions, data=data)
 
