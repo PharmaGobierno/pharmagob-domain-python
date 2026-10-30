@@ -1,4 +1,9 @@
+from dataclasses import dataclass, field
 from enum import Enum
+from typing import Optional
+
+from ._base import UpdatableModel
+from .minified import min_models
 
 
 class CountType(str, Enum):
@@ -46,3 +51,43 @@ class TaskStatus(str, Enum):
     CLOSED = "CLOSED"
     EXPIRED = "EXPIRED"
     CANCELLED = "CANCELLED"
+
+
+@dataclass(kw_only=True)
+class InventoryCountTaskModel(UpdatableModel):
+    __entity_name__ = "inventory-count-tasks"
+
+    umu_id: str
+    reference_id: str  # e.g. CF-000001, assigned from reference-counters
+    task_name: str
+    count_type: CountType
+    cyclic_mode: Optional[CyclicMode] = None
+    count_scope: CountScope
+    item_filter: Optional[min_models.CountItemFilterMin] = None
+    is_zero_stock_included: bool = False
+    scheduled_at: int
+    released_at: Optional[int] = None
+    expires_at: Optional[int] = None
+    status: TaskStatus = TaskStatus.SCHEDULED
+    schedule: Optional[min_models.CountScheduleMin] = None
+    lines: min_models.CountLinesQuantitiesMin = field(
+        default_factory=min_models.CountLinesQuantitiesMin
+    )
+    author: min_models.UserMin
+    last_author: min_models.UserMin
+
+    @classmethod
+    def _dict_to_dataclasses(cls, instance):
+        super()._dict_to_dataclasses(instance)
+        if isinstance(instance.item_filter, dict):
+            instance.item_filter = min_models.CountItemFilterMin(**instance.item_filter)
+        if isinstance(instance.schedule, dict):
+            instance.schedule = min_models.CountScheduleMin(**instance.schedule)
+
+    def minified(self) -> min_models.CountTaskMin:
+        return min_models.CountTaskMin(
+            id=self._id,
+            reference_id=self.reference_id,
+            task_name=self.task_name,
+            count_type=self.count_type,
+        )
