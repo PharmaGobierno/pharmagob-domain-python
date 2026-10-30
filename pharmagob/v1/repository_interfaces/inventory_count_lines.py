@@ -16,7 +16,17 @@ class InventoryCountLineRepositoryInterface(BaseRepositoryInterface):
     ) -> Optional[dict]:
         """Atomically $set `data` only if the line status is one of
         `expected_statuses` (e.g. ADJUSTMENT -> APPLYING). Returns the
-        updated document, or None when another request already claimed it."""
+        updated document, or None when another request already claimed it.
+
+        Claims of the adjustment flow (H-21, H-13 / H-15):
+        - ADJUSTMENT -> APPLYING: `data` also fixes `resolution.resolved_at`,
+          the stable timestamp reused by the $inc, the applied message and
+          the location-content-events, so a retry does not duplicate them.
+        - APPLYING -> VALIDATION (insufficient stock) or ADJUSTMENT ->
+          VALIDATION (sent by the auditor): `data` clears `resolved_at`,
+          does NOT write `resolution`, keeps `is_open` True and sets
+          `context.returned_to_audit`.
+        """
         raise NotImplementedError
 
     @abstractmethod
