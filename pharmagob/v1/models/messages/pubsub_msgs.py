@@ -280,16 +280,33 @@ class InventoryCountEventsPubsubMessage(BasePubsubMessage):
 @dataclass(kw_only=True)
 class InventoryCountAdjustmentAppliedPubsubMessage(BasePubsubMessage):
     """Applied adjustment of a line (resolution.adjustment_quantity) to be
-    propagated to location-content-events by the adapter."""
+    propagated to location-content-events by the adapter (H-12 option 1):
+    INVENTORY_COUNT_ACCEPTED when positive, INVENTORY_COUNT_DISPATCHED when
+    negative, context.quantity = abs(adjustment_quantity). An adjustment
+    of 0 is not published.
+
+    `location_content` is the document returned by the conditional $inc
+    (ReturnDocument.AFTER), the adapter must not read it again (H-20).
+    `transition_timestamp` (resolution.resolved_at, fixed in the
+    ADJUSTMENT -> APPLYING claim) is the origin_timestamp of the
+    location-content-event and of the kardex row, so a retry produces the
+    same _id instead of a duplicate (H-21)."""
 
     payload: InventoryCountLineModel
     event: str  # ADJUSTMENT_POSITIVE | ADJUSTMENT_NEGATIVE
-    location_content: Optional[LocationContentModel] = None  # state after the $inc
+    location_content: Optional[LocationContentModel] = None  # state after the $inc (H-20)
     version: str = "1"
 
     @classmethod
     def topic(cls) -> str:
         return "inventory-count-adjustment-applied"
+
+    @property
+    def transition_timestamp(self) -> int:
+        """Stable timestamp of the adjustment (H-21): never now()."""
+        if self.payload.resolution is None:
+            raise ValueError("an applied adjustment requires payload.resolution")
+        return self.payload.resolution.resolved_at
 
     def get_attributes(self) -> Dict[str, str]:
         default_attributes = super().get_attributes()
