@@ -46,10 +46,20 @@ def test_requirement_cases(case, kardex, first, second, expected_first, expected
     assert (result.status, result.case) == expected_second
 
 
+def _run_case(case):
+    _, kardex, first, second, _, _ = next(c for c in CASES if c[0] == case)
+    is_in_system = kardex is not OUT_OF_SYSTEM
+    entries = [CountEntry(first, kardex or 0)]
+    if second is not None:
+        entries.append(CountEntry(second, kardex or 0))
+    result = evaluate(entries, is_in_system=is_in_system)
+    return result.status, result.case
+
+
 @pytest.mark.parametrize("case, equivalent", [(7, 8), (5, 6), (1, 13), (2, 11)])
 def test_equivalent_cases_share_outcome(case, equivalent):
-    by_case = {c[0]: c for c in CASES}
-    assert by_case[case][4:] == by_case[equivalent][4:]
+    # Compares engine outputs, not rows of the CASES table
+    assert _run_case(case) == _run_case(equivalent)
 
 
 def test_without_entries_stays_pending():
@@ -84,3 +94,20 @@ def test_validated_round_different_from_kardex_goes_to_adjustment():
     result = evaluate(entries)
     assert result.status == LineStatus.ADJUSTMENT
     assert result.case is None
+
+
+def test_returned_to_audit_evaluates_the_last_validated_round():
+    # H-13 / H-15: round 3 (validated) finds -90 -> ADJUSTMENT; the stock is not
+    # enough for the $inc and the line returns to audit; a receipt arrives
+    # (kardex 150) and round 4 matches the kardex -> CLOSED, not round 3 again.
+    entries = [CountEntry(0, 100), CountEntry(10, 100), CountEntry(10, 100)]
+    assert evaluate(entries).status == LineStatus.ADJUSTMENT
+    entries.append(CountEntry(150, 150))
+    result = evaluate(entries)
+    assert (result.status, result.case) == (LineStatus.CLOSED, None)
+
+
+def test_returned_to_audit_new_difference_goes_back_to_adjustment():
+    entries = [CountEntry(0, 100), CountEntry(10, 100), CountEntry(10, 100), CountEntry(140, 150)]
+    result = evaluate(entries)
+    assert (result.status, result.case) == (LineStatus.ADJUSTMENT, None)

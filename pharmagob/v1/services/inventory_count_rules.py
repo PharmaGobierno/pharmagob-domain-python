@@ -17,16 +17,20 @@ class CountEntry:
 @dataclass(frozen=True)
 class RuleResult:
     status: LineStatus
-    case: Optional[int]  # None on round 3: the line keeps the round 2 case
+    case: Optional[int]  # None on the audit rounds: the line keeps the round 2 case
     note: str
 
 
 def evaluate(entries: Sequence[CountEntry], *, is_in_system: bool = True) -> RuleResult:
-    """Evaluates a line after saving a round (1, 2 or 3 validated by the auditor).
+    """Evaluates a line after saving a round (1, 2 or one validated by the auditor).
 
     Compares DIFFERENCES (counted_quantity - kardex_snapshot_quantity of its own
     round), not absolute quantities: a prescription dispatched between rounds
     does not invalidate the count (D-01).
+
+    From the third round on, every entry is a round validated by the auditor;
+    a line that returned from adjustment to audit (H-13 / H-15) gets a new one
+    (4, 5...) with its own snapshot, and only the LAST one decides.
     """
     if not entries:
         return RuleResult(LineStatus.PENDING, None, "Sin conteos")
@@ -34,7 +38,7 @@ def evaluate(entries: Sequence[CountEntry], *, is_in_system: bool = True) -> Rul
         return _first_round(entries[0], is_in_system)
     if len(entries) == 2:
         return _second_round(entries[0], entries[1], is_in_system)
-    return _validated_round(entries[2])
+    return _validated_round(entries[-1])
 
 
 def _first_round(c1: CountEntry, is_in_system: bool) -> RuleResult:
