@@ -1,6 +1,6 @@
 from datetime import datetime, time as day_time, timedelta
 from time import time
-from typing import List, Optional
+from typing import Dict, Iterator, List, Optional, Tuple
 from zoneinfo import ZoneInfo
 
 from pharmagob.v1.models.inventory_count_schedule import (
@@ -39,6 +39,28 @@ class InventoryCountScheduleService(
         if not result:
             return None
         return InventoryCountScheduleModel(**result)
+
+    def search_by_schedule_name(
+        self,
+        search_str: str,
+        *,
+        umu_id: str,
+        page: Optional[int] = None,
+        limit: Optional[int] = None,
+        sort: Optional[Dict[str, int]] = None,
+        status: Optional[str] = None,
+        frequency: Optional[str] = None,
+    ) -> Tuple[int, Iterator[InventoryCountScheduleModel]]:
+        count, result = self.repository.search_by_schedule_name(
+            search_str,
+            umu_id=umu_id,
+            status=status,
+            frequency=frequency,
+            page=page,
+            limit=limit,
+            sort=sort,
+        )
+        return count, map(lambda r: InventoryCountScheduleModel(**r), result)
 
     @staticmethod
     def calculate_next_run_at(

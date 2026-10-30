@@ -1,10 +1,25 @@
 from abc import abstractmethod
-from typing import List, Optional
+from typing import Dict, List, Optional, Tuple
 
 from ._base import BaseRepositoryInterface
 
 
 class InventoryCountScheduleRepositoryInterface(BaseRepositoryInterface):
+    @abstractmethod
+    def search_by_schedule_name(
+        self,
+        search_str: str,
+        *,
+        page: Optional[int] = None,
+        limit: Optional[int] = None,
+        sort: Optional[Dict[str, int]] = None,
+        umu_id: Optional[str] = None,
+        status: Optional[str] = None,
+        frequency: Optional[str] = None,
+    ) -> Tuple[int, List[dict]]:
+        """Partial match, case and accent insensitive."""
+        raise NotImplementedError
+
     @abstractmethod
     def claim(
         self,

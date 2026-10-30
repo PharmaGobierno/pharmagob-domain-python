@@ -1,5 +1,5 @@
 from time import time
-from typing import Any, List, Optional, Tuple
+from typing import Any, Dict, Iterator, List, Optional, Tuple
 
 from pharmagob.v1.models.inventory_count_line import InventoryCountLineModel, LineStatus
 from pharmagob.v1.repository_interfaces.inventory_count_lines import (
@@ -60,3 +60,39 @@ class InventoryCountLineService(
         limit: Optional[int] = None,
     ) -> int:
         return self.repository.delete_many(and_conditions, limit=limit)
+
+    def search_by_item(
+        self,
+        search_str: str,
+        *,
+        umu_id: str,
+        page: Optional[int] = None,
+        limit: Optional[int] = None,
+        sort: Optional[Dict[str, int]] = None,
+        task_id: Optional[str] = None,
+        status: Optional[List[str]] = None,
+        lot: Optional[str] = None,
+        is_in_system: Optional[bool] = None,
+        adjustment_sign: Optional[str] = None,
+        resolution_type: Optional[str] = None,
+        resolution_origin: Optional[str] = None,
+        resolved_at_gt: Optional[int] = None,
+        resolved_at_lt: Optional[int] = None,
+    ) -> Tuple[int, Iterator[InventoryCountLineModel]]:
+        count, result = self.repository.search_by_item(
+            search_str,
+            umu_id=umu_id,
+            task_id=task_id,
+            status=status,
+            lot=lot,
+            is_in_system=is_in_system,
+            adjustment_sign=adjustment_sign,
+            resolution_type=resolution_type,
+            resolution_origin=resolution_origin,
+            resolved_at_gt=resolved_at_gt,
+            resolved_at_lt=resolved_at_lt,
+            page=page,
+            limit=limit,
+            sort=sort,
+        )
+        return count, map(lambda r: InventoryCountLineModel(**r), result)
