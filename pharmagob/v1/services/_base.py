@@ -66,3 +66,40 @@ class BaseService(Generic[ModelT, RepositoryInterfaceT]):
             projection=projection,
         )
         return count, map(lambda itm: self.__model__(**itm), result)
+
+
+class UmuScopedService(BaseService[ModelT, RepositoryInterfaceT]):
+    """BaseService whose reads always filter by the umu_id of the user."""
+
+    def get(
+        self,
+        entity_id,
+        *,
+        umu_id: str,
+        sort: Optional[List[Tuple[str, int]]] = None,
+        projection: Optional[Union[list, dict]] = None,
+    ) -> Optional[ModelT]:
+        if not umu_id:
+            raise ValueError("umu_id is required")
+        return super().get(entity_id, umu_id=umu_id, sort=sort, projection=projection)
+
+    def get_paginated(
+        self,
+        page: int,
+        limit: int,
+        *,
+        umu_id: str,
+        and_conditions: Optional[List[tuple]] = None,
+        sort: Optional[List[Tuple[str, int]]] = None,
+        projection: Optional[List[str]] = None,
+    ) -> Tuple[int, Iterator[ModelT]]:
+        if not umu_id:
+            raise ValueError("umu_id is required")
+        return super().get_paginated(
+            page,
+            limit,
+            umu_id=umu_id,
+            and_conditions=and_conditions,
+            sort=sort,
+            projection=projection,
+        )
