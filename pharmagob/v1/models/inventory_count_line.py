@@ -38,7 +38,23 @@ class ReturnToAuditReason(str, Enum):
 
 @dataclass(kw_only=True)
 class InventoryCountLineModel(UpdatableModel):
-    """One line per location content (item + lot + location) of a task."""
+    """One line per location content (item + lot + location) of a task.
+
+    Out of system keys (`is_in_system=False`): `item` comes from the items
+    catalog, `expiration_date` is captured by the counter and is required
+    (H-18), and `location_content_id` is computed with the same formula, so
+    the adjustment creates the location content with that very _id (D-04).
+
+    `resolution` is written once when the line is resolved. Exception
+    (H-21): `resolution.resolved_at` is fixed in the claim
+    ADJUSTMENT -> APPLYING and reused as the stable timestamp of the $inc,
+    the applied message and the location-content-events; the rest of
+    `resolution` is written on ADJUSTED. If the line returns to audit
+    (H-13 / H-15) `resolved_at` is cleared, `resolution` is not written and
+    `is_open` stays True; the reason goes in `context.returned_to_audit`
+    `{reason: ReturnToAuditReason, current_quantity,
+    attempted_adjustment_quantity, returned_at}`.
+    """
 
     __entity_name__ = "inventory-count-lines"
 
@@ -46,7 +62,7 @@ class InventoryCountLineModel(UpdatableModel):
     task: min_models.CountTaskMin
     item: min_models.ItemMin
     lot: str
-    expiration_date: int
+    expiration_date: int  # required also out of system (H-18)
     location: min_models.LocationMin
     location_content_id: str  # LocationContentModel _id: uuid_by_params(item.id, lot, location.id)
     is_in_system: bool
@@ -57,7 +73,7 @@ class InventoryCountLineModel(UpdatableModel):
     resolution: Optional[min_models.CountResolutionMin] = None
     is_open: bool = True  # lock between open tasks of the same count_type (D-02)
     deleted_at: Optional[int] = None  # soft delete, physically purged later (D-09)
-    context: Optional[dict] = None
+    context: Optional[dict] = None  # extension bag, e.g. returned_to_audit
     last_author: min_models.UserMin
 
     @classmethod
