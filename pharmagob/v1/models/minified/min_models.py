@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional
+from typing import List, Optional
 
 
 @dataclass
@@ -122,3 +122,74 @@ class ReportRequestMin:
     report_type: str
     progress: int
     user_id: str
+
+
+@dataclass
+class CountTaskMin:
+    id: str
+    reference_id: str
+    task_name: str
+    count_type: str
+
+
+@dataclass
+class CountScheduleMin:
+    id: str
+    schedule_name: str
+    frequency: str
+
+
+@dataclass
+class CountLineMin:
+    id: str
+    item_id: str
+    lot: str
+    location_id: str
+    status: str
+
+
+@dataclass
+class CountEntryMin:
+    round: int  # 1, 2; 3 or more = validated in audit (more than one if the line returned to audit, H-13/H-15)
+    counted_quantity: int
+    kardex_snapshot_quantity: int  # location-content quantity when this round was captured
+    author: UserMin
+    counted_at: int
+
+    def __post_init__(self):
+        if isinstance(self.author, dict):
+            self.author = UserMin(**self.author)
+
+
+@dataclass
+class CountItemFilterMin:
+    item_ids: Optional[List[str]] = None
+    families: Optional[List[str]] = None  # phase 2
+    is_high_cost: Optional[bool] = None  # phase 2
+
+
+@dataclass
+class CountRuleMin:
+    case: int
+    note: str
+
+
+@dataclass
+class CountResolutionMin:
+    type: str
+    origin: str
+    author: UserMin
+    resolved_at: int
+    adjustment_quantity: int  # signed, 0 on rejection and no difference
+    final_quantity: int
+
+    def __post_init__(self):
+        if isinstance(self.author, dict):
+            self.author = UserMin(**self.author)
+
+
+@dataclass
+class CountLinesQuantitiesMin:
+    total_quantity: int = 0
+    counted_quantity: int = 0
+    resolved_quantity: int = 0
