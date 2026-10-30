@@ -57,11 +57,27 @@ class LocationContentRepositoryInterface(BaseRepositoryInterface):
     ) -> Optional[dict]:
         raise NotImplementedError
 
-    
     @abstractmethod
     def get_by_ids(
         self,
         entity_ids: List[str],
         umu_id: str,
     ) -> List[dict]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_batch_after(
+        self,
+        umu_id: str,
+        *,
+        after_id: Optional[str] = None,
+        limit: int = 1000,
+        location_label_code: Optional[str] = None,
+        location_label_code_not_in: Optional[List[str]] = None,
+        quantity_gt: Optional[int] = None,
+        item_ids: Optional[List[str]] = None,
+    ) -> List[dict]:
+        """Keyset (cursor) read sorted by _id ascending: returns up to `limit`
+        documents with _id > `after_id`. Used by the inventory count line
+        creation instead of skip/limit pagination."""
         raise NotImplementedError
