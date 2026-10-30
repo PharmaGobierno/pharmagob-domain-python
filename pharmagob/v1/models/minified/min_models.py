@@ -150,7 +150,7 @@ class CountLineMin:
 
 @dataclass
 class CountEntryMin:
-    round: int
+    round: int  # 1, 2; 3 or more = validated in audit (more than one if the line returned to audit, H-13/H-15)
     counted_quantity: int
     kardex_snapshot_quantity: int  # location-content quantity when this round was captured
     author: UserMin
