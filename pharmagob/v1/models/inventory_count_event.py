@@ -19,6 +19,12 @@ class Events(str, Enum):
     ADJUSTMENT_POSITIVE = "ADJUSTMENT_POSITIVE"
     ADJUSTMENT_NEGATIVE = "ADJUSTMENT_NEGATIVE"
     REJECTED = "REJECTED"
+    # Line sent back from adjustment to audit: insufficient stock for the
+    # conditional $inc (H-13) or returned by the auditor (H-15)
+    ADJUSTMENT_RETURNED_TO_AUDIT = "ADJUSTMENT_RETURNED_TO_AUDIT"
+
+
+CountEventType = Events  # name used in the epic
 
 
 class AuditActivity(str, Enum):
