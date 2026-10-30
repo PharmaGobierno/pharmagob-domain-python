@@ -18,7 +18,10 @@ class Events(str, Enum):
     STOCK_TRANSFER_DISPATCHED = "STOCK_TRANSFER_DISPATCHED"
     STOCK_TRANSFER_ACCEPTED = "STOCK_TRANSFER_ACCEPTED"
     STOCK_TRANSFER_RETURNED = "STOCK_TRANSFER_RETURNED"
-    
+    # Inventory count adjustments (H-12): one event per sign, like
+    # ISSUE_RECORD_*; an adjustment of 0 is not published
+    INVENTORY_COUNT_ACCEPTED = "INVENTORY_COUNT_ACCEPTED"  # increase quantity event
+    INVENTORY_COUNT_DISPATCHED = "INVENTORY_COUNT_DISPATCHED"  # substract quantity event
 
 
 @dataclass(kw_only=True)
