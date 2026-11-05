@@ -238,7 +238,7 @@ class InventoryCountTaskReleasePubsubMessage(BasePubsubMessage):
 
     @classmethod
     def topic(cls) -> str:
-        return "inventory-count-task-release"
+        return "pharmagob-inventory-count-task-release"
 
     def get_attributes(self) -> Dict[str, str]:
         default_attributes = super().get_attributes()
@@ -264,7 +264,7 @@ class InventoryCountEventsPubsubMessage(BasePubsubMessage):
 
     @classmethod
     def topic(cls) -> str:
-        return "inventory-count-events"
+        return "pharmagob-inventory-count-events"
 
     def get_attributes(self) -> Dict[str, str]:
         default_attributes = super().get_attributes()
@@ -299,7 +299,7 @@ class InventoryCountAdjustmentAppliedPubsubMessage(BasePubsubMessage):
 
     @classmethod
     def topic(cls) -> str:
-        return "inventory-count-adjustment-applied"
+        return "pharmagob-inventory-count-adjustment-applied"
 
     @property
     def transition_timestamp(self) -> int:
