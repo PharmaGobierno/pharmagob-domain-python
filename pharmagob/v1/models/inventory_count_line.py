@@ -54,6 +54,15 @@ class InventoryCountLineModel(UpdatableModel):
     `is_open` stays True; the reason goes in `context.returned_to_audit`
     `{reason: ReturnToAuditReason, current_quantity,
     attempted_adjustment_quantity, returned_at}`.
+
+    `pending_adjustment_quantity` (H-28) is the signed difference still to
+    be applied, `counts[-1].counted_quantity - counts[-1].kardex_snapshot_quantity`,
+    so Adjustments can filter by sign while `resolution` is still None. It is
+    written by whoever moves the line to ADJUSTMENT (capture round 2, audit
+    validation), kept through APPLYING and cleared (None) when the line
+    leaves the state (ADJUSTED, REJECTED, back to VALIDATION). It is the same
+    number `resolution.adjustment_quantity` gets when the adjustment is
+    applied (D-01); the two are never set at the same time.
     """
 
     __entity_name__ = "inventory-count-lines"
@@ -71,6 +80,7 @@ class InventoryCountLineModel(UpdatableModel):
     status: LineStatus = LineStatus.PENDING
     rule: Optional[min_models.CountRuleMin] = None
     resolution: Optional[min_models.CountResolutionMin] = None
+    pending_adjustment_quantity: Optional[int] = None  # signed; only in ADJUSTMENT/APPLYING (H-28)
     is_open: bool = True  # lock between open tasks of the same count_type (D-02)
     deleted_at: Optional[int] = None  # soft delete, physically purged later (D-09)
     context: Optional[dict] = None  # extension bag, e.g. returned_to_audit
