@@ -1,12 +1,51 @@
 from time import time
-from typing import Dict, Iterator, List, Optional, Tuple
+from typing import Dict, Iterable, Iterator, List, Optional, Tuple, Union
 
+from pharmagob.v1.models.inventory_count_line import LineStatus
 from pharmagob.v1.models.inventory_count_task import InventoryCountTaskModel, TaskStatus
 from pharmagob.v1.repository_interfaces.inventory_count_tasks import (
     InventoryCountTaskRepositoryInterface,
 )
 
 from ._base import UmuScopedService
+
+
+# Task counter that holds the lines of each open line status (DOM-12). The
+# final statuses (CLOSED, ADJUSTED, REJECTED) have no stage counter: they are
+# counted in `lines.resolved_quantity` by whoever resolves the line.
+LINE_STAGE_COUNTERS: Dict[LineStatus, str] = {
+    LineStatus.PENDING: "pending_quantity",
+    LineStatus.SECOND_COUNT: "second_count_quantity",
+    LineStatus.VALIDATION: "validation_quantity",
+    LineStatus.ADJUSTMENT: "adjustment_quantity",
+    LineStatus.APPLYING: "adjustment_quantity",
+}
+
+LineStatusLike = Union[LineStatus, str]
+
+
+def line_stage_increments(
+    transitions: Iterable[Tuple[Optional[LineStatusLike], Optional[LineStatusLike]]],
+) -> Dict[str, int]:
+    """Increments of the stage counters of a task for a batch of line status
+    changes, ready to merge into `InventoryCountTaskService.increment`.
+
+    Each transition is `(previous_status, new_status)`; `None` as previous
+    status is a line that did not exist (out of system). Counters whose net
+    change is zero are left out, so `ADJUSTMENT -> APPLYING` adds nothing.
+
+    >>> line_stage_increments([("PENDING", "SECOND_COUNT"), ("PENDING", "CLOSED")])
+    {'lines.pending_quantity': -2, 'lines.second_count_quantity': 1}
+    """
+    deltas: Dict[str, int] = {}
+    for previous, new in transitions:
+        for status, step in ((previous, -1), (new, 1)):
+            if status is None:
+                continue
+            counter = LINE_STAGE_COUNTERS.get(LineStatus(status))
+            if counter is not None:
+                deltas[counter] = deltas.get(counter, 0) + step
+    return {f"lines.{name}": delta for name, delta in deltas.items() if delta != 0}
 
 
 class InventoryCountTaskService(
