@@ -190,6 +190,15 @@ class CountResolutionMin:
 
 @dataclass
 class CountLinesQuantitiesMin:
+    """Line counters of a count task.
+
+    Always: `pending + second_count + validation + adjustment + resolved = total`
+    and `counted = total - pending` (DOM-12)."""
+
     total_quantity: int = 0
-    counted_quantity: int = 0
-    resolved_quantity: int = 0
+    counted_quantity: int = 0  # lines that already have their first count
+    resolved_quantity: int = 0  # lines in CLOSED, ADJUSTED or REJECTED
+    pending_quantity: int = 0  # lines in PENDING: first count missing
+    second_count_quantity: int = 0  # lines in SECOND_COUNT
+    validation_quantity: int = 0  # lines in VALIDATION (audit)
+    adjustment_quantity: int = 0  # lines in ADJUSTMENT or APPLYING
