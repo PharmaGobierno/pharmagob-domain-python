@@ -192,8 +192,19 @@ class CountResolutionMin:
 class CountLinesQuantitiesMin:
     """Line counters of a count task.
 
-    Always: `pending + second_count + validation + adjustment + resolved = total`
-    and `counted = total - pending` (DOM-12)."""
+    State counters (where each line is now, DOM-12). Always:
+    `pending + second_count + validation + adjustment + resolved = total`
+    and `counted = total - pending`.
+
+    Done counters (lines that LEFT a status forward, DOM-13) and rejected
+    counters (lines that left it rejected). They accumulate and never add
+    up to `total`: a line closed on its first count never reaches the
+    second one, and a line sent to adjustment by the rules engine never
+    reaches validation. Per stage, `pending + done + rejected` = lines that
+    have reached that stage. A line returned to audit from adjustment
+    (H-13 / H-15) leaves `validated` again only if it had been validated.
+    Names follow the line status, not the screen (`validation` is the
+    audit screen)."""
 
     total_quantity: int = 0
     counted_quantity: int = 0  # lines that already have their first count
@@ -202,3 +213,8 @@ class CountLinesQuantitiesMin:
     second_count_quantity: int = 0  # lines in SECOND_COUNT
     validation_quantity: int = 0  # lines in VALIDATION (audit)
     adjustment_quantity: int = 0  # lines in ADJUSTMENT or APPLYING
+    second_counted_quantity: int = 0  # left SECOND_COUNT (DOM-13)
+    validated_quantity: int = 0  # left VALIDATION to CLOSED or ADJUSTMENT (DOM-13)
+    validation_rejected_quantity: int = 0  # left VALIDATION to REJECTED (DOM-13)
+    adjusted_quantity: int = 0  # left ADJUSTMENT/APPLYING to ADJUSTED (DOM-13)
+    adjustment_rejected_quantity: int = 0  # left ADJUSTMENT to REJECTED (DOM-13)
